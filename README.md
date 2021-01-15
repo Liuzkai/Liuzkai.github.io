@@ -1,3 +1,3 @@
 # My Blog
 
-This is my tech blog  [here](Liuzkai.github.io)
+This is my tech blog  [here](https://Liuzkai.github.io)
