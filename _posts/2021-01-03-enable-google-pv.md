@@ -177,7 +177,7 @@ There is a detailed [tutorial](https://developers.google.com/analytics/solutions
     $ gcloud app browse
     ```
 
-6. Visit the deployed service. Add a `/admin` to the end of the URL.
+6. Visit the deployed service. Add a `/admin` to the end of the URL. 
 
 7. Click on **Authorize Users** and make sure to add yourself as a managed user.
 
