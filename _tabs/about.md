@@ -10,7 +10,7 @@ order: 4
 # MIT License
 ---
 
-> Hi~My name is Zhongkai Liu. I'm a tech artist in game company. From 2020, I worked in Tencent at Shenzhen China. I'm committed to developing unreal, Houdini and PCG pipeline.You can contact me on [email](liuzkai2012@gmail.com)  or [Twitter](https://twitter.com/WalkinCloud2) 
+> Hi~My name is Zhongkai Liu. I'm a tech artist in game company. From 2020, I worked in Tencent at Shenzhen China. I'm committed to developing unreal, Houdini and PCG pipeline.You can contact me on liuzkai2012@gmail.com  or [Twitter](https://twitter.com/WalkinCloud2) 
 
 > 大家好，欢迎关注我的[知乎](https://www.zhihu.com/people/liuzkai) ,我会将该博客完整的文章定期转到知乎上和大家分享。
 >

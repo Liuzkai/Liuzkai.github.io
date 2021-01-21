@@ -9,12 +9,12 @@
 # --------------------------
 title: Walk In Cloud                          # the main title
 
-tagline: my blog   # it will display as the sub-title
+tagline: I'm a tech artist in China. I work with unreal and houdini.  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  A minimal, portfolio, sidebar,
-  bootstrap Jekyll theme with responsive web design
-  and focuses on text presentation.
+    I'm a tech artist in China. 
+    I work with unreal and houdini.
+    Here I will share my mind and what I learned in work.
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://liuzkai.github.io'
@@ -36,7 +36,7 @@ social:
     - https://github.com/Liuzkai      # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    # - https://www.linkedin.com/in/%E4%B8%AD%E5%87%AF-%E5%88%98-27a589122/
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 # --------------------------
