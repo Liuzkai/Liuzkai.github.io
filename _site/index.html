@@ -4,6 +4,8 @@
 
 <html lang="en" 
   
+    mode="dark"
+  
 >
 
   <!--
@@ -21,25 +23,25 @@
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="Chirpy" />
-<meta name="author" content="your_full_name" />
+<meta property="og:title" content="Walk In Cloud" />
+<meta name="author" content="Zhongkailiu" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A minimal, portfolio, sidebar, bootstrap Jekyll theme with responsive web design and focuses on text presentation." />
 <meta property="og:description" content="A minimal, portfolio, sidebar, bootstrap Jekyll theme with responsive web design and focuses on text presentation." />
-<link rel="canonical" href="/" />
-<meta property="og:url" content="/" />
-<meta property="og:site_name" content="Chirpy" />
+<link rel="canonical" href="https://liuzkai.github.io/" />
+<meta property="og:url" content="https://liuzkai.github.io/" />
+<meta property="og:site_name" content="Walk In Cloud" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Chirpy" />
-<meta name="twitter:site" content="@twitter_username" />
-<meta name="twitter:creator" content="@your_full_name" />
+<meta property="twitter:title" content="Walk In Cloud" />
+<meta name="twitter:site" content="@WalkinCloud2" />
+<meta name="twitter:creator" content="@Zhongkailiu" />
 <meta name="google-site-verification" content="google_meta_tag_verification" />
 <script type="application/ld+json">
-{"headline":"Chirpy","url":"/","sameAs":["https://twitter.com/username","https://github.com/username"],"@type":"WebSite","author":{"@type":"Person","name":"your_full_name"},"description":"A minimal, portfolio, sidebar, bootstrap Jekyll theme with responsive web design and focuses on text presentation.","name":"your_full_name","@context":"https://schema.org"}</script>
+{"@type":"WebSite","url":"https://liuzkai.github.io/","headline":"Walk In Cloud","sameAs":["https://twitter.com/WalkinCloud2","https://github.com/Liuzkai"],"author":{"@type":"Person","name":"Zhongkailiu"},"description":"A minimal, portfolio, sidebar, bootstrap Jekyll theme with responsive web design and focuses on text presentation.","name":"ZhongkaiLiu","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
-  <title>Chirpy
+  <title>Walk In Cloud
   </title>
 
   <!--
@@ -171,10 +173,10 @@
     </div>
 
     <div class="site-title mt-3">
-      <a href="/">Chirpy</a>
+      <a href="/">Walk In Cloud</a>
     </div>
 
-    <div class="site-subtitle font-italic">A text-focused Jekyll theme</div>
+    <div class="site-subtitle font-italic">my blog</div>
 
   </div><!-- .profile-wrapper -->
 
@@ -225,8 +227,8 @@
       
 
       
-      <a href="https://github.com/github_username" aria-label="github"
-        class="order-3"
+      <a href="https://github.com/liuzkai" aria-label="github"
+        
         target="_blank" rel="noopener">
         <i class="fab fa-github-alt"></i>
       </a>
@@ -236,8 +238,8 @@
       
 
       
-      <a href="https://twitter.com/twitter_username" aria-label="twitter"
-        class="order-4"
+      <a href="https://twitter.com/WalkinCloud2" aria-label="twitter"
+        
         target="_blank" rel="noopener">
         <i class="fab fa-twitter"></i>
       </a>
@@ -248,8 +250,8 @@
 
       
       <a href="
-          javascript:location.href = 'mailto:' + ['example','doamin.com'].join('@')" aria-label="email"
-        class="order-5"
+          javascript:location.href = 'mailto:' + ['liuzkai2012','gmail.com'].join('@')" aria-label="email"
+        
         >
         <i class="fas fa-envelope"></i>
       </a>
@@ -260,7 +262,7 @@
 
       
       <a href="/feed.xml" aria-label="rss"
-        class="order-6"
+        
         >
         <i class="fas fa-rss"></i>
       </a>
@@ -268,164 +270,6 @@
 
     
 
-    
-      
-        <span class="icon-border order-2"></span>
-      
-
-      <span id="mode-toggle-wrapper" class="order-1">
-        <!--
-  Switch the mode between dark and light.
-
-  v2.1
-  https://github.com/cotes2020/jekyll-theme-chirpy
-  © 2020 Cotes Chung
-  MIT License
--->
-
-<i class="mode-toggle fas fa-adjust"></i>
-
-<script type="text/javascript">
-
-  class ModeToggle {
-    static get MODE_KEY() { return "mode"; }
-    static get DARK_MODE() { return "dark"; }
-    static get LIGHT_MODE() { return "light"; }
-
-    constructor() {
-      if (this.hasMode) {
-        if (this.isDarkMode) {
-          if (!this.isSysDarkPrefer) {
-            this.setDark();
-          }
-        } else {
-          if (this.isSysDarkPrefer) {
-            this.setLight();
-          }
-        }
-      }
-
-      var self = this;
-
-      /* always follow the system prefers */
-      this.sysDarkPrefers.addListener(function() {
-        if (self.hasMode) {
-          if (self.isDarkMode) {
-            if (!self.isSysDarkPrefer) {
-              self.setDark();
-            }
-
-          } else {
-            if (self.isSysDarkPrefer) {
-              self.setLight();
-            }
-          }
-
-          self.clearMode();
-        }
-
-        self.updateMermaid();
-      });
-
-    } /* constructor() */
-
-
-    setDark() {
-      $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE);
-      sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE);
-    }
-
-    setLight() {
-      $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE);
-      sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE);
-    }
-
-    clearMode() {
-      $('html').removeAttr(ModeToggle.MODE_KEY);
-      sessionStorage.removeItem(ModeToggle.MODE_KEY);
-    }
-
-    get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); }
-
-    get isSysDarkPrefer() { return this.sysDarkPrefers.matches; }
-
-    get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; }
-
-    get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; }
-
-    get hasMode() { return this.mode != null; }
-
-    get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); }
-
-    /* get the current mode on screen */
-    get modeStatus() {
-      if (this.isDarkMode
-        || (!this.hasMode && this.isSysDarkPrefer) ) {
-        return ModeToggle.DARK_MODE;
-      } else {
-        return ModeToggle.LIGHT_MODE;
-      }
-    }
-
-    updateMermaid() {
-      if (typeof mermaid !== "undefined") {
-        let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default");
-        let config = { theme: expectedTheme };
-
-        /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */
-        $(".mermaid").each(function() {
-          let svgCode = $(this).prev().children().html();
-          $(this).removeAttr("data-processed");
-          $(this).html(svgCode);
-        });
-
-        mermaid.initialize(config);
-        mermaid.init(undefined, ".mermaid");
-      }
-    }
-
-    flipMode() {
-      if (this.hasMode) {
-        if (this.isSysDarkPrefer) {
-          if (this.isLightMode) {
-            this.clearMode();
-          } else {
-            this.setLight();
-          }
-
-        } else {
-          if (this.isDarkMode) {
-            this.clearMode();
-          } else {
-            this.setDark();
-          }
-        }
-
-      } else {
-        if (this.isSysDarkPrefer) {
-          this.setLight();
-        } else {
-          this.setDark();
-        }
-      }
-
-      this.updateMermaid();
-
-    } /* flipMode() */
-
-  } /* ModeToggle */
-
-  let toggle = new ModeToggle();
-
-  $(".mode-toggle").click(function() {
-
-    toggle.flipMode();
-
-  });
-
-</script>
-
-      </span>
     
 
   </div> <!-- .sidebar-bottom -->
@@ -456,7 +300,7 @@
     <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i>
 
     <div id="topbar-title">
-      Chirpy
+      Walk In Cloud
     </div>
 
     <i id="search-trigger" class="fas fa-search fa-fw"></i>
@@ -534,243 +378,7 @@
 
   <div class="post-preview">
     <h1>
-      <a href="/posts/getting-started/">Getting Started</a>
-    </h1>
-
-    <div class="post-content">
-      <p>
-        
-
-
-
-
-
-        Installation
-
-Fork Chirpy on GitHub, rename the repository to USERNAME.github.io (where USERNAME is your GitHub username), and then open terminal and clone the fork to local by:
-
-$ git clone https:...
-      </p>
-    </div>
-
-    <div class="post-meta text-muted d-flex justify-content-between">
-
-      <div>
-        <!-- posted date -->
-        <i class="far fa-calendar fa-fw"></i>
-        <!--
-  Date format snippet
-
-  v2.4.1
-  https://github.com/cotes2020/jekyll-theme-chirpy
-  © 2020 Cotes Chung
-  MIT License
--->
-<span class="timeago "
-  
-    data-toggle="tooltip"
-    data-placement="bottom"
-    title="Fri, Aug  9, 2019,  8:55 PM +0800"
-  >
-
-  
-  
-
-  
-    Aug  9, 2019
-  
-
-  <i class="unloaded">2019-08-09T20:55:00+08:00</i>
-
-</span>
-
-        <!-- time to read -->
-        <i class="far fa-clock fa-fw"></i>
-        <!--
-  Calculate the post's reading time, and display the word count in tooltip
- -->
-
-
-
-
-
-
-<!-- return element -->
-<span class="readtime" data-toggle="tooltip" data-placement="bottom" title="669 words">3 min</span>
-
-
-        <!-- page views -->
-        
-      </div>
-
-      
-      <div class="pin">
-        <i class="fas fa-thumbtack fa-fw"></i>
-        <span>Pinned</span>
-      </div>
-      
-
-    </div> <!-- .post-meta -->
-
-  </div> <!-- .post-review -->
-
-
-
-  <div class="post-preview">
-    <h1>
-      <a href="/posts/enable-google-pv/">Enable Google Page Views</a>
-    </h1>
-
-    <div class="post-content">
-      <p>
-        
-
-
-
-
-
-        This post is to enable Page Views on the Chirpy theme based blog that you just built. This requires technical knowledge and it’s recommended to keep the google_analytics.pv disabled unless you have...
-      </p>
-    </div>
-
-    <div class="post-meta text-muted d-flex justify-content-between">
-
-      <div>
-        <!-- posted date -->
-        <i class="far fa-calendar fa-fw"></i>
-        <!--
-  Date format snippet
-
-  v2.4.1
-  https://github.com/cotes2020/jekyll-theme-chirpy
-  © 2020 Cotes Chung
-  MIT License
--->
-<span class="timeago "
-  
-    data-toggle="tooltip"
-    data-placement="bottom"
-    title="Mon, Jan  4, 2021,  7:32 AM +0800"
-  >
-
-  
-  
-
-  
-    Jan  4
-  
-
-  <i class="unloaded">2021-01-04T07:32:00+08:00</i>
-
-</span>
-
-        <!-- time to read -->
-        <i class="far fa-clock fa-fw"></i>
-        <!--
-  Calculate the post's reading time, and display the word count in tooltip
- -->
-
-
-
-
-
-
-<!-- return element -->
-<span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1365 words">7 min</span>
-
-
-        <!-- page views -->
-        
-      </div>
-
-      
-
-    </div> <!-- .post-meta -->
-
-  </div> <!-- .post-review -->
-
-
-
-  <div class="post-preview">
-    <h1>
-      <a href="/posts/customize-the-favicon/">Customize the Favicon</a>
-    </h1>
-
-    <div class="post-content">
-      <p>
-        
-
-
-
-
-
-        In Chirpy, the image files of Favicons are placed in assets/img/favicons/. You may need to replace them with your own. So let’s see how to customize these Favicons.
-
-With a square image (PNG, JPG o...
-      </p>
-    </div>
-
-    <div class="post-meta text-muted d-flex justify-content-between">
-
-      <div>
-        <!-- posted date -->
-        <i class="far fa-calendar fa-fw"></i>
-        <!--
-  Date format snippet
-
-  v2.4.1
-  https://github.com/cotes2020/jekyll-theme-chirpy
-  © 2020 Cotes Chung
-  MIT License
--->
-<span class="timeago "
-  
-    data-toggle="tooltip"
-    data-placement="bottom"
-    title="Sun, Aug 11, 2019, 12:34 AM +0800"
-  >
-
-  
-  
-
-  
-    Aug 11, 2019
-  
-
-  <i class="unloaded">2019-08-11T00:34:00+08:00</i>
-
-</span>
-
-        <!-- time to read -->
-        <i class="far fa-clock fa-fw"></i>
-        <!--
-  Calculate the post's reading time, and display the word count in tooltip
- -->
-
-
-
-
-
-
-<!-- return element -->
-<span class="readtime" data-toggle="tooltip" data-placement="bottom" title="164 words">1 min</span>
-
-
-        <!-- page views -->
-        
-      </div>
-
-      
-
-    </div> <!-- .post-meta -->
-
-  </div> <!-- .post-review -->
-
-
-
-  <div class="post-preview">
-    <h1>
-      <a href="/posts/write-a-new-post/">Writing a New Post</a>
+      <a href="/posts/Test/">Test</a>
     </h1>
 
     <div class="post-content">
@@ -784,10 +392,11 @@ With a square image (PNG, JPG o...
         Naming and Path
 
 Create a new file named YYYY-MM-DD-TITLE.EXTENSION and put it in the _posts/ of the root directory. Please note that the EXTENSION must be one of md and markdown.
+English
 
-Front Matter
+中文测试效果
 
-Ba...
+...
       </p>
     </div>
 
@@ -808,17 +417,17 @@ Ba...
   
     data-toggle="tooltip"
     data-placement="bottom"
-    title="Thu, Aug  8, 2019,  2:10 PM +0800"
+    title="Thu, Jan 21, 2021, 12:58 PM +0800"
   >
 
   
   
 
   
-    Aug  8, 2019
+    Jan 21
   
 
-  <i class="unloaded">2019-08-08T14:10:00+08:00</i>
+  <i class="unloaded">2021-01-21T12:58:00+08:00</i>
 
 </span>
 
@@ -834,91 +443,7 @@ Ba...
 
 
 <!-- return element -->
-<span class="readtime" data-toggle="tooltip" data-placement="bottom" title="784 words">4 min</span>
-
-
-        <!-- page views -->
-        
-      </div>
-
-      
-
-    </div> <!-- .post-meta -->
-
-  </div> <!-- .post-review -->
-
-
-
-  <div class="post-preview">
-    <h1>
-      <a href="/posts/text-and-typography/">Text and Typography</a>
-    </h1>
-
-    <div class="post-content">
-      <p>
-        
-
-
-
-
-
-        This post is to show Markdown syntax rendering on Chirpy, you can also use it as an example of writing. Now, let’s start looking at text and typography.
-
-Titles
-
-
-H1 - heading
-
-H2 - heading
-
-H3 - h...
-      </p>
-    </div>
-
-    <div class="post-meta text-muted d-flex justify-content-between">
-
-      <div>
-        <!-- posted date -->
-        <i class="far fa-calendar fa-fw"></i>
-        <!--
-  Date format snippet
-
-  v2.4.1
-  https://github.com/cotes2020/jekyll-theme-chirpy
-  © 2020 Cotes Chung
-  MIT License
--->
-<span class="timeago "
-  
-    data-toggle="tooltip"
-    data-placement="bottom"
-    title="Thu, Aug  8, 2019, 11:33 AM +0800"
-  >
-
-  
-  
-
-  
-    Aug  8, 2019
-  
-
-  <i class="unloaded">2019-08-08T11:33:00+08:00</i>
-
-</span>
-
-        <!-- time to read -->
-        <i class="far fa-clock fa-fw"></i>
-        <!--
-  Calculate the post's reading time, and display the word count in tooltip
- -->
-
-
-
-
-
-
-<!-- return element -->
-<span class="readtime" data-toggle="tooltip" data-placement="bottom" title="674 words">3 min</span>
+<span class="readtime" data-toggle="tooltip" data-placement="bottom" title="44 words">1 min</span>
 
 
         <!-- page views -->
@@ -1047,156 +572,6 @@ H3 - h...
         
         
 
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
 
 
   
@@ -1206,22 +581,7 @@ H3 - h...
 
       
         
-        <a class="post-tag" href="/tags/favicon/">favicon</a>
-      
-        
-        <a class="post-tag" href="/tags/getting-started/">getting started</a>
-      
-        
-        <a class="post-tag" href="/tags/google-analytics/">google analytics</a>
-      
-        
-        <a class="post-tag" href="/tags/pageviews/">pageviews</a>
-      
-        
-        <a class="post-tag" href="/tags/typography/">typography</a>
-      
-        
-        <a class="post-tag" href="/tags/writing/">writing</a>
+        <a class="post-tag" href="/tags/test/">Test</a>
       
 
       </div>
@@ -1255,7 +615,7 @@ H3 - h...
     <div class="footer-left">
       <p class="mb-0">
         © 2021
-        <a href="https://twitter.com/username">your_full_name</a>.
+        <a href="https://twitter.com/WalkinCloud2">ZhongkaiLiu</a>.
         
         <span data-toggle="tooltip" data-placement="top"
           title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span>
@@ -1316,176 +676,11 @@ H3 - h...
         
         
 
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-    
-  
-    
-    
-    
-    
-      
-        
-        
-
 
 
       
         
-        <a class="post-tag" href="/tags/favicon/">favicon</a>
-      
-        
-        <a class="post-tag" href="/tags/getting-started/">getting started</a>
-      
-        
-        <a class="post-tag" href="/tags/google-analytics/">google analytics</a>
-      
-        
-        <a class="post-tag" href="/tags/pageviews/">pageviews</a>
-      
-        
-        <a class="post-tag" href="/tags/typography/">typography</a>
-      
-        
-        <a class="post-tag" href="/tags/writing/">writing</a>
+        <a class="post-tag" href="/tags/test/">Test</a>
       
 
     </div>
@@ -1523,7 +718,7 @@ SimpleJekyllSearch({
   searchInput: document.getElementById('search-input'),
   resultsContainer: document.getElementById('search-results'),
   json: '/assets/js/data/search.json',
-  searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0">  <a href="{url}">{title}</a>  <div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1">    <div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div>    <div><i class="fa fa-tag fa-fw"></i>{tags}</div>  </div>  <p>{snippet}</p></div>',
+  searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0">  <a href="https://liuzkai.github.io{url}">{title}</a>  <div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1">    <div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div>    <div><i class="fa fa-tag fa-fw"></i>{tags}</div>  </div>  <p>{snippet}</p></div>',
   noResultsText: '<p class="mt-5">Oops! No result founds.</p>'
 });
 </script>
