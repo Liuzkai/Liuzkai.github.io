@@ -5,13 +5,27 @@ categories: [Unreal, Script]
 tags: [Unreal, Python] 
 ---
 
+# 为什么使用Unreal Python
+
+Unreal的蓝图，作为一种可视化脚本语言，已将非常强大了。它不香吗，为什么还要使用python来做脚本呢？
+
+第一个原因正是蓝图的可视化，在项目进行中工具变得复杂后，反而不易于维护。而以文本形式的python拥有了先天的优势。
+
+第二个原因是python的易扩展性，是蓝图无法比拟。python有丰富的库，同时DCC软件普遍支持Python的API，因此python是CG行业普遍使用的管线语言。
+
+第三个原因是编译问题。虽然蓝图的编译也是非常快的(是的，蓝图也要编译一下)，但随着工程的复杂之后，蓝图启动编辑和编译也会变的越来越慢，而使用python的话，基本上不需要编辑。在工作体验上是非常优雅和愉悦的，你使用过python之后就会不得不深陷其中。
+
+## Python与蓝图异同点
+
+python可以调用所有蓝图可以调用的方法，但是python并不能创建类并在场景中使用，同时python也不能用于运行时。python只能用于editor的功能脚本化，因此建议开启Editor Script Utilities Plugin来扩展python的方法调用。
+
+在C++中给function声明UFUNCTION时，只要设置为蓝图可调用(BlueprintCallable)，此方法python也就可以使用了。
+
 # 环境搭建
 
-首先我们需要开启unreal的python功能，同时生成unreal.py文件方便我们些代码时可以提供自动补全功能。另外介绍以下IDE的环境设置和几种Unreal触发python脚本的方法。
+首先我们需要开启unreal的python功能，同时生成unreal.py文件方便我们写代码时可以提供自动补全功能。另外介绍以下IDE的环境设置和几种Unreal触发python脚本的方法。
 
 本案例使用的是Unreal 4.26.0版本
-
-
 
 ## 开启 Unreal Python
 
@@ -25,7 +39,9 @@ tags: [Unreal, Python]
 
 然后重启Editor。此时在Project/Intermediate/PythonStub路径下会生成一个unreal.py文件，该文件主要用于IDE生成自动补全功能的头文件。
 
-## 配置Pycharm环境，实现自动补全
+## 配置IED环境，实现自动补全
+
+### pycharm
 
 我们将上面得到的unreal.py文件路径添加到python interpreter paths中：
 
@@ -43,6 +59,10 @@ idea.max.intellisense.filesize=500000
 
 可以修改一个比较大的值，这个值过大会导致占用更多的内存，因此请谨慎调节。
 
+### vscode
+
+如果你使用vscode，只需安装pylance插件，并在setting中将PythonStub文件夹的路径填写到Python:Analysis:Extra Paths一栏中。
+
 ## Unreal调用python的方法
 
 ### 1 命令行调用
@@ -51,25 +71,27 @@ idea.max.intellisense.filesize=500000
 
 ![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_cmd.png)
 
-这个方法适合简单的命令。
+这个方法适合简单的命令。也可以输入`run C:/path/to/your/file/filename.py` 来运行一整个脚本。
 
 ### 2 调用Python脚本命令
 
-在File菜单栏下使用Execute Python Script可以运行py文件：
+在File菜单栏下使用*Execute Python Script* 可以运行py文件：
 
 ![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_execute.png)
 
 这个方法适合简单交互，但是复杂命令的脚本。
 
-# 与蓝图异同点
+### 3 在蓝图中调用
 
-python可以调用所有蓝图可以调用的方法，但是python并不能创建类并在场景中使用，同时python也不能用于运行时。python只能用于editor的功能脚本化，因此建议开启Editor Script Utilities Plugin来扩展python的方法调用。
+在蓝图中，可以创建python command和python script两个节点。分别代表了上面两种调用方法。
 
-在C++中给function声明UFUNCTION时，只要设置为蓝图可调用(BlueprintCallable)，此方法python也就可以使用了。
+### 4 在Content中运行
 
-python脚本可以不用编译，即使蓝图编译很快，但是在工程量变大后，蓝图的编译也会变得有些缓慢了，对于一些小功能的实现，python即改即用就显得格外高效且可爱。
+在Editor Setting中，找到Python一栏，勾选上Enable Content Browser Integration。这样就可以在Content中创建python脚本了。但是如果你想编辑该脚本，需要使用IDE打开文件进行编辑。在文件上右键选择run可以运行脚本。
 
-python作为一个脚本语言，可以非常简单且高效的扩展编辑器的自动化，简直是游戏制作的必备良品。接下来我就用几个案例，深入浅出的带大家了解和使用unreal python。
+### 5 在启动编辑器时运行
+
+这Project Settings中，添加脚本路径，选择触发阶段，在启动编辑时就会自动的运行该脚本。适合一些需要初始化编辑器资源的脚本自动加载运行。
 
 
 
