@@ -9,7 +9,7 @@ tags: [Unreal, Python]
 
 首先我们需要开启unreal的python功能，同时生成unreal.py文件方便我们些代码时可以提供自动补全功能。另外介绍以下IDE的环境设置和几种Unreal触发python脚本的方法。
 
-本案例使用的时Unreal 4.26.0版本
+本案例使用的是Unreal 4.26.0版本
 
 
 
@@ -45,11 +45,25 @@ idea.max.intellisense.filesize=500000
 
 ## Unreal调用python的方法
 
+### 1 命令行调用
 
+点击~键或在Output Log窗口下，可以切换cmd为python，直接在输入栏中输入python代码回车后即可运行。
+
+![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_cmd.png)
+
+这个方法适合简单的命令。
+
+### 2 调用Python脚本命令
+
+在File菜单栏下使用Execute Python Script可以运行py文件：
+
+![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_execute.png)
+
+这个方法适合简单交互，但是复杂命令的脚本。
 
 # 与蓝图异同点
 
-python可以调用所有蓝图可以调用的方法，但是python并不能创建类并在场景中使用，同时python也不能用于运行时。python只能用于editor的功能脚本化，因此建议开启Editor Utility Plugin来扩展python的方法调用。
+python可以调用所有蓝图可以调用的方法，但是python并不能创建类并在场景中使用，同时python也不能用于运行时。python只能用于editor的功能脚本化，因此建议开启Editor Script Utilities Plugin来扩展python的方法调用。
 
 在C++中给function声明UFUNCTION时，只要设置为蓝图可调用(BlueprintCallable)，此方法python也就可以使用了。
 
