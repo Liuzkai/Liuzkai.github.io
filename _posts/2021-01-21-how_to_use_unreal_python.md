@@ -107,14 +107,88 @@ idea.max.intellisense.filesize=500000
 
 
 
-# 常用的类 
+# 常用的类
 
-前文中我已经提到，建议大家打开**Editor Script Utilities Plugin**来扩展功能。首先我们创建一个Editor Utility Widget,并在界面中添加一个按钮，并使用python来实现按键功能：
+首先我们要做的就是把`unreal`库导入：
 
-![widget](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/widget_01.png)
+```python
+# you shall import any you need libraries else, but you have to make sure it in the unreal python path
+import unreal
+```
 
-运行效果：
+我们可以把中间结果打印到output log中，便于我们debug。
 
-![result](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/widget_02.png)
+```python
+# Out log in the output log window
+unreal.log("Hello World")
+unreal.log_warning("I'm yellow！This a waring!")
+unreal.log_error("I'm red. I'm wrong!")
+```
 
-下面的代码粘贴在python Script节点中，并编译蓝图即可。
+接下来，我们就可以写我们的业务代码了。
+
+常用的场景和资源管理器中相关的命令都在`unreal.EditorLevelLibrary`和`unreal.EditorUtilityLibrary`两个类中。我们首先从这两个类进行入手：
+
+例如获得选中的物体：
+
+```python
+# get selected actors
+actors = unreal.EditorLevelLibrary.get_selected_level_actors()
+# get selected assets
+assets = unreal.EditorUtilityLibrary.get_selected_assets()
+```
+
+这两个函数在蓝图中对应的节点是：
+
+![get level actors node](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/get_Level_actors.png)
+
+![get selected asset node](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/get_selected_assets.png)
+
+这两个节点的Target就是定义的类的位置，同时也是Python的类的名称。当你找不到对应的function时，可以找找蓝图的节点，从而找到灵感。
+
+当然你也可以查找[Unreal Python API Documentation](https://docs.unrealengine.com/en-US/PythonAPI/index.html)。
+
+
+
+## 获得场景中所有的Static Mesh Actor
+
+```python
+actors = unreal.EditorLevelLibrary.get_all_level_actors()
+# Filter by class
+static_mesh_actors = unreal.EditorFilterLibrary.by_class(actors,unreal.StaticMeshActor,unreal.EditorScriptingFilterType.INCLUDE)
+```
+
+`unreal.EditorFilterLibrary`类是分类节点，可以将输入的序列根据条件进行分类。
+
+或者：
+
+```python
+static_mesh_actor = unreal.GameplayStatics.get_all_actors_of_class(unreal.EditorLevelLibrary.get_editor_world(),unreal.StaticMeshActor)
+```
+
+
+
+## 获得选中的Actor所对应的资源
+
+```python
+# get the first selected actors
+actor = unreal.EditorLevelLibrary.get_selected_level_actors()[0]
+# we check if actor is static mesh or not
+if isinstance(actor, unreal.StaticMeshActor):
+    # get the static mesh component
+    sm_comp = actor.get_component_by_class(unreal.StaticMeshComponent)
+    if sm_comp:
+        # load the asset!
+        sm = unreal.load_asset(sm_comp.static_mesh.get_path_name())
+```
+
+使用`isinstance()`函数可以判断能否拿到我们需要的对象，同时也可以让IDE提供进一步的自动补全功能。因为我们并不能在IDE中运行脚本让其知道这些变量的真实类型，所以IDE的自动补全功能不能很好的识别变量的类型。而使用`isinstance()`既可以健壮了代码，也为IDE补全功能提供支持，可谓一举两得。
+
+```python
+# broswer to the asset position
+asset_path = sm_comp.static_mesh.get_path_name()
+unreal.EditorAssetLibrary.sync_browser_to_objects([asset_path])
+```
+
+使用`sync_browser_to_objects()`可以直接将Content定位到资源的位置。注意函数输入的是列表。
+
