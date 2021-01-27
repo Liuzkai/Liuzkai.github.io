@@ -41,7 +41,7 @@ python可以调用所有蓝图可以调用的方法，但是python并不能创�
 
 ## 配置IED环境，实现自动补全
 
-### pycharm
+### 配置pycharm
 
 我们将上面得到的unreal.py文件路径添加到python interpreter paths中：
 
@@ -59,7 +59,7 @@ idea.max.intellisense.filesize=500000
 
 可以修改一个比较大的值，这个值过大会导致占用更多的内存，因此请谨慎调节。
 
-### vscode
+### 配置vscode
 
 如果你使用vscode，只需安装pylance插件，并在setting中将PythonStub文件夹的路径填写到Python:Analysis:Extra Paths一栏中。
 
@@ -79,21 +79,42 @@ idea.max.intellisense.filesize=500000
 
 ![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_execute.png)
 
-这个方法适合简单交互，但是复杂命令的脚本。
+这个方法适合没有交互，但是复杂命令的脚本。
 
 ### 3 在蓝图中调用
 
-在蓝图中，可以创建python command和python script两个节点。分别代表了上面两种调用方法。
+在蓝图中，可以创建Execute python command和Execute python script两个节点。分别代表了上面两种调用方法。
+
+![python node](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_bp_node.png)
+
+特别说明一下，**Execute Python Script** 节点可以添加输入和输出，只需在代码中使用该输入的名称作为变量即可获得该输出的数据，类似材质里的Custom Node，这样Python和蓝图的交互成为可能。
 
 ### 4 在Content中运行
 
 在Editor Setting中，找到Python一栏，勾选上Enable Content Browser Integration。这样就可以在Content中创建python脚本了。但是如果你想编辑该脚本，需要使用IDE打开文件进行编辑。在文件上右键选择run可以运行脚本。
 
+![Content Python File](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_content.png)
+
 ### 5 在启动编辑器时运行
 
-这Project Settings中，添加脚本路径，选择触发阶段，在启动编辑时就会自动的运行该脚本。适合一些需要初始化编辑器资源的脚本自动加载运行。
+这Project Settings->Python->Startup Scripts，添加脚本路径，选择触发阶段，在启动编辑时就会自动的运行该脚本。适合一些需要初始化编辑器资源的脚本自动加载运行。
+
+![Startup Scripts](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Python_Startup_Scripts.png)
 
 
 
-# 使用案例 
+随着版本的更迭，或我的疏忽，可能还有其他调用python的方法。当然你也可以在C++层面直接调用python脚本，但是这已经不是我们所关注的部分了。通常结合Editor Utility Widget和python node是一个比较好的方案，也是我常用的方案。下面的例子都是使用该种方法实现。
 
+
+
+# 常用的类 
+
+前文中我已经提到，建议大家打开**Editor Script Utilities Plugin**来扩展功能。首先我们创建一个Editor Utility Widget,并在界面中添加一个按钮，并使用python来实现按键功能：
+
+![widget](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/widget_01.png)
+
+运行效果：
+
+![result](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/widget_02.png)
+
+下面的代码粘贴在python Script节点中，并编译蓝图即可。
