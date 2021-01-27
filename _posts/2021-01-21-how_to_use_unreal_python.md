@@ -112,7 +112,8 @@ idea.max.intellisense.filesize=500000
 首先我们要做的就是把`unreal`库导入：
 
 ```python
-# you shall import any you need libraries else, but you have to make sure it in the unreal python path
+# you shall import any you need libraries else,
+# but you have to make sure it in the unreal python path
 import unreal
 ```
 
@@ -155,7 +156,7 @@ assets = unreal.EditorUtilityLibrary.get_selected_assets()
 ```python
 actors = unreal.EditorLevelLibrary.get_all_level_actors()
 # Filter by class
-static_mesh_actors = unreal.EditorFilterLibrary.by_class(actors,unreal.StaticMeshActor,unreal.EditorScriptingFilterType.INCLUDE)
+static_mesh_actors = unreal.EditorFilterLibrary.by_class(actors,unreal.StaticMeshActor,                                                 unreal.EditorScriptingFilterType.INCLUDE)
 ```
 
 `unreal.EditorFilterLibrary`类是分类节点，可以将输入的序列根据条件进行分类。
@@ -163,7 +164,7 @@ static_mesh_actors = unreal.EditorFilterLibrary.by_class(actors,unreal.StaticMes
 或者：
 
 ```python
-static_mesh_actor = unreal.GameplayStatics.get_all_actors_of_class(unreal.EditorLevelLibrary.get_editor_world(),unreal.StaticMeshActor)
+static_mesh_actor = unreal.GameplayStatics.get_all_actors_of_class(unreal.EditorLevelLibrary.get_editor_world(),                                                                unreal.StaticMeshActor)
 ```
 
 
@@ -190,5 +191,5 @@ asset_path = sm_comp.static_mesh.get_path_name()
 unreal.EditorAssetLibrary.sync_browser_to_objects([asset_path])
 ```
 
-使用`sync_browser_to_objects()`可以直接将Content定位到资源的位置。注意函数输入的是列表。
+使用`sync_browser_to_objects()`可以直接定位到资源的位置，注意函数输入的是列表。
 
