@@ -105,8 +105,6 @@ idea.max.intellisense.filesize=500000
 
 随着版本的更迭，或我的疏忽，可能还有其他调用python的方法。当然你也可以在C++层面直接调用python脚本，但是这已经不是我们所关注的部分了。通常结合Editor Utility Widget和python node是一个比较好的方案，也是我常用的方案。下面的例子都是使用该种方法实现。
 
-
-
 # 常用的类
 
 首先我们要做的就是把`unreal`库导入：
@@ -149,41 +147,43 @@ assets = unreal.EditorUtilityLibrary.get_selected_assets()
 
 当然你也可以查找[Unreal Python API Documentation](https://docs.unrealengine.com/en-US/PythonAPI/index.html)。
 
+下面几个例子由浅入深的讲解unreal python的使用方法，并提示Python与蓝图的异同点。
 
-
-## 获得场景中所有的Static Mesh Actor
+## 找某一类Actor
 
 ```python
 actors = unreal.EditorLevelLibrary.get_all_level_actors()
 # Filter by class
-static_mesh_actors = unreal.EditorFilterLibrary.by_class(actors,unreal.StaticMeshActor,                                                 unreal.EditorScriptingFilterType.INCLUDE)
+static_mesh_actors = unreal.EditorFilterLibrary.by_class(actors,unreal.StaticMeshActor,unreal.EditorScriptingFilterType.INCLUDE)
 ```
 
-`unreal.EditorFilterLibrary`类是分类节点，可以将输入的序列根据条件进行分类。
+`unreal.EditorFilterLibrary`类可以将输入的序列根据条件进行分类。
 
 或者：
 
 ```python
-static_mesh_actor = unreal.GameplayStatics.get_all_actors_of_class(unreal.EditorLevelLibrary.get_editor_world(),                                                                unreal.StaticMeshActor)
+static_mesh_actor = unreal.GameplayStatics.get_all_actors_of_class(unreal.EditorLevelLibrary.get_editor_world(),unreal.StaticMeshActor)
 ```
 
 
 
-## 获得选中的Actor所对应的资源
+## 从Actor找Asset
 
 ```python
 # get the first selected actors
-actor = unreal.EditorLevelLibrary.get_selected_level_actors()[0]
+actors = unreal.EditorLevelLibrary.get_selected_level_actors()
+actor = actors[0] if actors else None
 # we check if actor is static mesh or not
-if isinstance(actor, unreal.StaticMeshActor):
+if actor and isinstance(actor, unreal.StaticMeshActor):
     # get the static mesh component
     sm_comp = actor.get_component_by_class(unreal.StaticMeshComponent)
     if sm_comp:
         # load the asset!
         sm = unreal.load_asset(sm_comp.static_mesh.get_path_name())
+        unreal.log(sm)
 ```
 
-使用`isinstance()`函数可以判断能否拿到我们需要的对象，同时也可以让IDE提供进一步的自动补全功能。因为我们并不能在IDE中运行脚本让其知道这些变量的真实类型，所以IDE的自动补全功能不能很好的识别变量的类型。而使用`isinstance()`既可以健壮了代码，也为IDE补全功能提供支持，可谓一举两得。
+使用`isinstance()`函数可以判断能否拿到我们需要的对象，同时也可以让IDE提供进一步的自动补全功能。因为我们并不能在IDE中运行脚本让其知道这些变量的真实类型，所以IDE的自动补全功能不能很好的识别变量的类型。而使用`isinstance()`既可以健壮了代码，也为IDE补全功能提供支持，可谓一举两得。（类似蓝图中Cast to某一类节点）
 
 ```python
 # broswer to the asset position
@@ -192,4 +192,6 @@ unreal.EditorAssetLibrary.sync_browser_to_objects([asset_path])
 ```
 
 使用`sync_browser_to_objects()`可以直接定位到资源的位置，注意函数输入的是列表。
+
+## 从Asset找Actor
 
