@@ -16,3 +16,4 @@ order: 4
 >
 > 目前我在学习pipeline相关的内容以及Procedural Content Generation相关的内容，欢迎与我交流、探讨。
 
+![qrcode_liuzkai.github.io](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/qrcode_liuzkai.github.io_web.png)
