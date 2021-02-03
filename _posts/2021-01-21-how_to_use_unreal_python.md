@@ -195,3 +195,87 @@ unreal.EditorAssetLibrary.sync_browser_to_objects([asset_path])
 
 ## 从Asset找Actor
 
+pending
+
+## Import
+
+(Setting Options >>>) Create Task >>> Run Task
+
+### Import Fbx As StaticMesh
+
+```python
+def fbx_import_option():
+    options = unreal.FbxImportUI()
+```
+
+
+
+## Export
+
+(Setting Options >>>) Create Task >>> Run Task
+
+### Export Static Mesh As Fbx
+
+```python
+def fbx_export_option():
+    '''Create the fbx export option'''
+    _options = unreal.FbxExportOption()
+    _options.ascii = True
+    _options.collision = False
+    _options.export_local_time = True
+    _options.export_morph_targets = False
+    _options.export_preview_mesh = False
+    _options.fbx_export_compatibility = unreal.FbxExportCompatibility.FBX_2013
+    _options.force_front_x_axis = False
+    _options.level_of_detail = False
+    _options.map_skeletal_motion_to_root = False
+    _options.vertex_color = False
+    return _options
+
+def create_export_task(exporter, obj, options, file_name):
+    '''generated the task by exporter'''
+    _task = unreal.AssetExportTask()
+    _task.exporter = exporter
+    _task.object = obj
+    _task.options = options
+    _task.automated = True
+    _task.replace_identical = True
+    _task.write_empty_files = False
+    _task.filename = file_name
+    return _task
+
+# asset to export
+asset = unreal.EditorUtilityLibrary.get_selected_asset_data()[0]
+# the path to export
+filename = unreal.Paths.project_saved_dir() + 'export/' + asset.get_name() + '.fbx'
+# the exporter type
+exporter = unreal.StaticMeshExporterFBX()
+# create the Task with the options
+task = create_export_task(exporter, asset, fbx_export_option(), filename)
+# Run Task !
+if unreal.Exporter.run_asset_export_task(task):
+    unreal.log("export_tasks : success")
+else:
+    unreal.log("export_tasks : failure")
+```
+
+### Export Texture As TGA
+
+```python
+...
+# the texture exporter !
+exporter = unreal.TextureExporterTGA()
+# the path to export
+filename = unreal.Paths.project_saved_dir() + 'export/' + asset.get_name() + '.tga'
+# texture exporter do not need options
+task = create_export_task(ex, asset, None, filename)
+# Run Task
+unreal.Exporter.run_asset_export_task(task)
+```
+
+### Export Scene
+
+```python
+# pending
+```
+
