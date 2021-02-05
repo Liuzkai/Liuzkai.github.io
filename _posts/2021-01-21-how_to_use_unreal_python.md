@@ -199,20 +199,90 @@ pending
 
 ## Import
 
-(Setting Options >>>) Create Task >>> Run Task
+导入的基本方法：
 
-### Import Fbx As StaticMesh
+> 创建输入任务，然后运行任务。
+
+Fbx导入有一些参数，需要我们提前设置。而贴图的导入相对简单，没有参数设置。
 
 ```python
-def fbx_import_option():
-    options = unreal.FbxImportUI()
+def fbx_static_mesh_import_data():
+    """ static mesh import data """
+    _static_mesh_import_data = unreal.FbxStaticMeshImportData()
+    _static_mesh_import_data.import_translation = unreal.Vector(0.0, 0.0, 0.0)
+    _static_mesh_import_data.import_rotation = unreal.Rotator(0.0, 0.0, 0.0)
+    _static_mesh_import_data.import_uniform_scale = 1.0
+    _static_mesh_import_data.combine_meshes = True
+    _static_mesh_import_data.generate_lightmap_u_vs = True
+    _static_mesh_import_data.auto_generate_collision = True
+    return _static_mesh_import_data
+
+
+def fbx_skeletal_mesh_import_data():
+    """ skeletal mesh import data """
+    _skeletal_mesh_import_data = unreal.FbxSkeletalMeshImportData()
+    _skeletal_mesh_import_data.import_translation = unreal.Vector(0.0, 0.0, 0.0)
+    _skeletal_mesh_import_data.import_rotation = unreal.Rotator(0.0, 0.0, 0.0)
+    _skeletal_mesh_import_data.import_uniform_scale = 1.0
+    _skeletal_mesh_import_data.import_morph_targets = True
+    _skeletal_mesh_import_data.update_skeleton_reference_pose = False
+    return _skeletal_mesh_import_data
+
+
+def fbx_import_option(static_mesh_import_data = None, skeletal_mesh_import_data = None):
+    """ fbx import option """
+    _options = unreal.FbxImportUI()
+    _options.import_mesh = True
+    _options.import_textures = False
+    _options.import_materials = False
+    _options.import_as_skeletal = False
+    _options.static_mesh_import_data = static_mesh_import_data
+    _options.skeletal_mesh_import_data = skeletal_mesh_import_data
+    return _options
+
+
+def create_import_task(file_name, destinataion_path, options=None):
+    """ the import task for fbx, texture, audio and os on """
+    _task = unreal.AssetImportTask()
+    _task.automated = True
+    _task.destination_path = destinataion_path
+    _task.filename = file_name
+    _task.replace_existing = True
+    _task.save = True
+    _task.options = options
+    return _task
+
+
+# target asset
+static_mesh_fbx   = 'C:/sm_box.fbx'
+skeletal_mesh_fbx = 'C:/sk_character.fbx'
+2d_texture        = 'C:/t_checker.tga'
+
+# set the input option for fbx ( texture does not have option )
+import_static_mesh_option = fbx_import_option(static_mesh_import_data=fbx_static_mesh_import_data())
+import_skeletal_mesh_option = fbx_import_option(skeletal_mesh_import_data=fbx_skeletal_mesh_import_data())
+
+# generate task
+import_static_mesh_task = create_import_task(static_mesh_fbx, '/Game/StaticMesh/', import_static_mesh_option)
+import_skeletal_mesh_task = create_import_task(static_mesh_fbx, '/Game/SkeletalMesh/', import_skeletal_mesh_option)
+import_texture_task = create_import_task(2d_texture, '/Game/Texture/')
+
+total_task = [import_static_mesh_task, import_skeletal_mesh_task, import_texture_task]
+
+# run the task
+unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks(total_task)
+
 ```
 
 
 
 ## Export
 
-(Setting Options >>>) Create Task >>> Run Task
+导出的基本方法：
+
+> 创建输出任务，然后运行任务。
+
+而输出不同类型的资源，需要创建不同的Exporter和设置不同的Export Option（有些类型没有输出选项）。将Exporter和Export Option传入Task，就可以创建对应的输出任务。
 
 ### Export Static Mesh As Fbx
 
@@ -276,6 +346,7 @@ unreal.Exporter.run_asset_export_task(task)
 ### Export Scene
 
 ```python
-# pending
+# EditorLoadingAndSavingUtils Class
+unreal.EditorLoadingAndSavingUtils.export_scene(export_selected_actors_only=True)
 ```
 
