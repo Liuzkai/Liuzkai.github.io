@@ -335,7 +335,7 @@ kernel void writeBack(
 
 可以通过绑定参数时，勾选optional来处理。
 
-当参数勾选为optional后，需要在代码中添加宏来控制代码，此时需要注意，如果你将最后一个参数作为optional，再写宏时，需要将逗号“，”写入宏的范围内。
+> 当参数勾选为optional后，需要在代码中添加宏来控制代码，此时需要注意，如果你将最后一个参数作为optional，再写宏时，需要将逗号“，”写入宏的范围内。
 
 也可以通过避免将最后一个参数绑定为optional来解决这个问题。
 
@@ -413,7 +413,7 @@ opencl只能将值输出给一组数据（一个属性），因此当我们需�
 在参数一栏，设置可读和可写。
 
 ```glsl
-# Write to prim
+// Write to prim
 kernel void kernelName( 
                  int pointcd_length, 
                  global float * pointcd ,
@@ -445,7 +445,7 @@ kernel void kernelName(
 ```
 
 ```glsl
-# Write to point
+// Write to point
 kernel void kernelName( 
                  int pointcd_length, 
                  global float * pointcd ,
@@ -919,20 +919,7 @@ kernel void kernelName(
 
 # 关于workset
 
-- [Understanding Kernels, Work-groups and Work-items — TI OpenCL User's Guide](https://www.notion.so/Understanding-Kernels-Work-groups-and-Work-items-TI-OpenCL-User-s-Guide-b5638a655af04514b06bea1e1df2e738)
-
-    在OpenCL：
-
-    1. 用源表示的内核代表1个工作项的计算，
-    2. enqueueNDRangeKernel命令中指定的本地大小确定将多少个工作项目分组到一个工作组中，
-    3. 在TI DSP设备上，工作组中的工作项通过编译器插入的循环顺序执行，
-    4. enqueueNDRangeKernel命令中指定的**全局大小通过将全局大小除以局部大小来确定总共有多少个工作项，以及还有多少个工作组**，
-    5. **在TI DSP设备上，工作组以工作池方式在DSP内核之间并发执行，直到完成入队命令的所有工作组为止，**
-    6. **可以同时执行的工作组的数量取决于设备中DSP内核的数量**（在OpenCL中，DSP内核是计算单元）。
-
-    下图通过显示两个enqueueNDRangeKernel命令从视觉上总结了上述内容，这两个命令在语义上执行相同的总计算，但是**通过简单地更改局部大小参数，就可以改变内核执行方式的平衡**。在这两种情况下，全局大小均为1024。在情况1中，局部大小为128，这将导致执行分区创建8个工作组，每个工作组将循环访问128个工作项。在情况2中，本地大小更改为256，这将导致4个工作组，每个工作组具有256个工作项。
-
-在OpenCL中，有work-item和work-group的概念，将多个work-item组合成一个group后，会通过一次提交进入堆栈中等待一起处理。可以理解为一个work-group为一个最小并行单元（不知道对不对，懂得大神可以指出）。所有work-item都是并行进行，并执行kernel内核函数。
+在OpenCL中，有work-item和work-group的概念，将多个work-item组合成一个group后，会通过一次提交进入堆栈中等待一起处理。可以理解为一个work-group为一个最小提交单元（不知道对不对，懂得大神可以指出）。所有work-item都是并行进行，并执行kernel内核函数。
 
 一次任务，所有的计算单元大小为`global size`，而每个组的大小称为`local  size`。而组数可由  `global size / local  size` 得到。每个work-item有一个global id，也有一个work-group内部的local-id，而work-group也有自己的work-id。可以申请1、2和3维的work-item和work-group。当然这houdini已经帮我们做好了，我们只需要编写每个item中运行的内核函数就行了。
 
@@ -964,7 +951,7 @@ cook time :  73.37ms
 
 # 案例八 创建自定义函数
 
-因为没法编辑主程序（host program），houdini已经为我们封装好了，只有两个内核函数可以使用过，一个就是Kernel函数，一个是writeBack函数。
+因为没法编辑主程序（host program），houdini已经为我们封装好了，只有两个内核函数可以使用，一个就是Kernel函数，一个是writeBack函数。
 
 如果我们需要反复用到一段代码，可以创建自定义函数，但是此时不能用 __kernel 或 kernel做为关键字了。而是像正常函数一样直接创建。
 
