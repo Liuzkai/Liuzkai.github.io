@@ -933,7 +933,7 @@ kernel void kernelName(
 
 workset_len ： 128
 
-cook time ： 4.154s    4154 ms
+cook time ： 4154 ms
 
 workset_len ：8192
 
