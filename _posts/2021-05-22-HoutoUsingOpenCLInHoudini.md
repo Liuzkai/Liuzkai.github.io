@@ -404,7 +404,7 @@ OpenCL对Volume上下文对接需要注意两个地方，第一就是需要在op
 
 ![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_03.gif)
 
-opencl只能将值输出给一组数据（一个属性），因此当我们需要将数据从两个属性间来回写入，将需要两个opencl进行串联，通过使用feedback foreach 和complie block节点来进行优化。
+~~opencl只能将值输出给一组数据（一个属性）~~可以写出多组数据，但是因为buffer需要比较为可读可写后会影响性能，因此当我们需要将数据从两个属性间来回写入，将需要两个opencl进行串联，通过使用feedback foreach 和complie block节点来进行优化。
 
 ![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_10.png)
 
