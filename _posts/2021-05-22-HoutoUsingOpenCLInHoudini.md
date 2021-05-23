@@ -5,6 +5,10 @@ categories: [Houdini, Script]
 tags: [Houdini, OpenCL, ComputeShader] 
 ---
 
+
+
+# 前言
+
 本文中前六个案例参考[OpenCL | H16.5 Masterclass | SideFX](https://www.sidefx.com/tutorials/houdini-165-masterclass-opencl/)此视频，网页已经提供了文件，可以前去下载。后面的案例和关于workset的认识可能存在纰漏，如读者发现还请批评指正。
 
 关于OpenCL的相关参考可查阅此[文章](https://developer.amd.com/wordpress/media/2012/10/OpenCLTutorial-Chinese.pdf)和此[网站](https://www.khronos.org/registry/OpenCL/sdk/1.2/docs/man/xhtml/)。
