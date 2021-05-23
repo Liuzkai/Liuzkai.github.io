@@ -5,8 +5,6 @@ categories: [Houdini, Script]
 tags: [Houdini, OpenCL, ComputeShader] 
 ---
 
-# 如何在Houdini中使用OpenCL
-
 本文中前六个案例参考[OpenCL | H16.5 Masterclass | SideFX](https://www.sidefx.com/tutorials/houdini-165-masterclass-opencl/)此视频，网页已经提供了文件，可以前去下载。后面的案例和关于workset的认识可能存在纰漏，如读者发现还请批评指正。
 
 关于OpenCL的相关参考可查阅此[文章](https://developer.amd.com/wordpress/media/2012/10/OpenCLTutorial-Chinese.pdf)和此[网站](https://www.khronos.org/registry/OpenCL/sdk/1.2/docs/man/xhtml/)。
@@ -404,7 +402,7 @@ OpenCL对Volume上下文对接需要注意两个地方，第一就是需要在op
 
 ![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_03.gif)
 
-~~opencl只能将值输出给一组数据（一个属性）~~可以写出多组数据，但是因为buffer需要比较为可读可写后会影响性能，因此当我们需要将数据从两个属性间来回写入，将需要两个opencl进行串联，通过使用feedback foreach 和complie block节点来进行优化。
+~~opencl只能将值输出给一组数据（一个属性）~~可以写出多组数据，但是因为buffer需要设置为可读可写后会影响性能，因此当我们需要将数据从两个属性间来回写入，将需要两个opencl进行串联，通过使用feedback foreach 和complie block节点来进行优化。
 
 ![](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_10.png)
 

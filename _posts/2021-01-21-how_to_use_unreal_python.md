@@ -1,5 +1,5 @@
 ---
-title: How to use Unreal Python
+title: Unreal Python 入门
 date: 2021-01-25 21:00:00 +/-0080
 categories: [Unreal, Script]
 tags: [Unreal, Python] 
@@ -141,7 +141,7 @@ assets = unreal.EditorUtilityLibrary.get_selected_assets()
 
 ![get level actors node](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/get_Level_actors.png)
 
-![get selected asset node](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/get_selected_assets.png)
+<img src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/get_selected_assets.png" alt="get selected asset node"  />
 
 这两个节点的Target就是定义的类的位置，同时也是Python的类的名称。当你找不到对应的function时，可以找找蓝图的节点，从而找到灵感。
 
