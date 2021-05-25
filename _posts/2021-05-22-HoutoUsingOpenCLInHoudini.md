@@ -976,3 +976,39 @@ kernel void kernelName(
     c[idx] = myfunc(a, b);
 }
 ```
+
+# 案例九 使用Ramp参数
+
+![Houdini_openCL_09.gif](https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_09.gif)
+
+设置为Ramp参数后，处理曲线参数外，还有一个Ramp Size，其实这个值的大小就是量化的大小。如果你有100个点要映射到曲线上，这里就改为100.
+
+```glsl
+kernel void kernelName( 
+                 int Cd_length, 
+                 global float * Cd ,
+                 int ramp_size, 
+                 constant float * ramp_vals
+)
+{
+    int idx = get_global_id(0);
+    if (idx >= Cd_length)
+        return;
+    float3 r = (float3)(ramp_vals[idx],0,0);
+    vstore3(r, idx, Cd);
+}
+```
+
+直接使用下标就能获得值：`ramp_vals[idx]`
+
+另外在houdini18.5版本中，ramp的参数映射好像不起作用，可利用参数的Callback Script来实现。
+
+在你的外层节点（或HDA）界面添加一个Ramp参数，修改其Callback Script为Python，然后输入以下代码：
+
+```python
+# callback script 需要写在一行中，用分号隔开 ，相对路径开头不要添加斜杠
+dummy=hou.pwd().node("/obj/to").parm("ramp_to"); 
+thisRamp=hou.pwd().parm("ramp_from").eval(); 
+dummy.set(thisRamp)
+```
+
