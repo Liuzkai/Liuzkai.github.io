@@ -1,0 +1,1293 @@
+<!DOCTYPE html><html lang="en" mode="dark" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.7.2"><meta name="generator" content="Jekyll v4.2.0" /><meta property="og:title" content="如何在Houdini中使用OpenCL" /><meta name="author" content="Zhongkailiu" /><meta property="og:locale" content="en_US" /><meta name="description" content="前言" /><meta property="og:description" content="前言" /><link rel="canonical" href="https://liuzkai.github.io/posts/HoutoUsingOpenCLInHoudini/" /><meta property="og:url" content="https://liuzkai.github.io/posts/HoutoUsingOpenCLInHoudini/" /><meta property="og:site_name" content="Walk In Cloud" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2021-05-22T21:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="如何在Houdini中使用OpenCL" /><meta name="twitter:site" content="@WalkinCloud2" /><meta name="twitter:creator" content="@Zhongkailiu" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"author":{"@type":"Person","name":"Zhongkailiu"},"description":"前言","url":"https://liuzkai.github.io/posts/HoutoUsingOpenCLInHoudini/","@type":"BlogPosting","headline":"如何在Houdini中使用OpenCL","dateModified":"2021-05-25T17:47:56+08:00","datePublished":"2021-05-22T21:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://liuzkai.github.io/posts/HoutoUsingOpenCLInHoudini/"},"@context":"https://schema.org"}</script><title>如何在Houdini中使用OpenCL | Walk In Cloud</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" href="/assets/css/post.css" as="style"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-JWC7CE0EWK"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JWC7CE0EWK'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/IMG_0795.JPG" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Walk In Cloud</a></div><div class="site-subtitle font-italic">I'm a tech artist in China. I work with unreal and houdini.</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/tabs/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tabs/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/tabs/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tabs/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/liuzkai" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/WalkinCloud2" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['liuzkai2012','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>如何在Houdini中使用OpenCL</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>如何在Houdini中使用OpenCL</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Sat, May 22, 2021, 9:00 PM +0800" > May 22, 2021 <i class="unloaded">2021-05-22T21:00:00+08:00</i> </span> by <span class="author"> Zhongkailiu </span></div><div> <span> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Tue, May 25, 2021, 5:47 PM +0800" > May 25, 2021 <i class="unloaded">2021-05-25T17:47:56+08:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="5372 words">29 min</span></div></div><div class="post-content"><h1 id="前言">前言</h1><p>本文中前六个案例参考<a href="https://www.sidefx.com/tutorials/houdini-165-masterclass-opencl/">OpenCL H16.5 Masterclass SideFX</a>此视频，网页已经提供了文件，可以前去下载。后面的案例和关于workset的认识可能存在纰漏，如读者发现还请批评指正。</p><p>关于OpenCL的相关参考可查阅此<a href="https://developer.amd.com/wordpress/media/2012/10/OpenCLTutorial-Chinese.pdf">文章</a>和此<a href="https://www.khronos.org/registry/OpenCL/sdk/1.2/docs/man/xhtml/">网站</a>。</p><h1 id="案例一-attribute">案例一 Attribute</h1><p>对模型进行平均平滑</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_01.gif" alt="Houdini_openCL_01.gif" /></p><p>因为opencl中没法用到vex中的方法，只能处理传进去的数组，因此将需要的数据作为属性保存到顶点中：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_opencl_setAttr.png" alt="" /></p><h2 id="vex">vex</h2><p>先用传统的VEX实现该算法：</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="n">vector</span> <span class="n">avg</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="n">foreach</span><span class="p">(</span><span class="kt">int</span> <span class="n">npt</span><span class="p">;</span> <span class="n">i</span><span class="p">[]</span><span class="err">@</span><span class="n">neighbours</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">"P"</span><span class="p">,</span> <span class="n">npt</span><span class="p">);</span>
+    <span class="n">avg</span> <span class="o">+=</span> <span class="n">pos</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">avg</span> <span class="o">/=</span> <span class="n">len</span><span class="p">(</span><span class="n">i</span><span class="p">[]</span><span class="err">@</span><span class="n">neighbours</span><span class="p">);</span>
+
+<span class="err">@</span><span class="n">P</span> <span class="o">=</span> <span class="n">avg</span><span class="p">;</span>
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_1.png" /></p><p>使用Complie Block和feedback for loop，进行迭代。我们迭代10000次。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_2.png" alt="" /></p><p>整体用时21.211s</p><h2 id="opencl">opencl</h2><p>下面我们用OpenCL的方法进行实现：</p><h3 id="第一步先绑定参数到opencl中">第一步，先绑定参数到opencl中：</h3><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_3.png" alt="" /></p><p>配置好设置之后，函数会为每个属性传入2到3个参数。</p><blockquote><p>当属性不是数组时，会传入该属性的数组以及数组的长度。 如果出入的是一个数组属性时，会传入该属性数组以及其长度，另外还有一个保存每个属性长度的数组。</p></blockquote><h3 id="第二步构建函数">第二步，构建函数：</h3><p>可以使用Generate Kemel来生成函数声明结构：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_4.png" alt="" /></p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">neighbours_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours_index</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// No writeable attribute provided</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">P_length</span> <span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+        
+    <span class="n">float3</span> <span class="n">avg</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">neighbours_index</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">neighbours_index</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">npt</span> <span class="o">=</span> <span class="n">neighbours</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">avg</span> <span class="o">+=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">npt</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">avg</span> <span class="o">/=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    
+    <span class="n">vstore3</span><span class="p">(</span><span class="n">avg</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>性能： 循环10000次用时0.704s</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_5.png" alt="" /></p><h3 id="writeback函数">writeBack函数</h3><p>使用wirteBack函数，保证每次访问的都是迭代次数一致的数据</p><p>因为是平行，而且每个单元并不知道其他单元的计算顺序，因此可能会在访问neighbour的位置信息时，有时访问的是上次迭代，有时访问的不是。</p><p>writeBack函数时会在主函数之后运行，其运行完后主函数再次运行，以此类推，想乒乓一样。</p><p>我们创建一个临时属性来保存中间数据。并用writeBack函数来写回，保持大家读取和写入数据的一致性。</p><p>先为每个点创建一个临时属性<code class="language-plaintext highlighter-rouge">v@__scratch;</code> 并在opencl节点中引入。</p><p>然后启动Use Write Back Kemel，并修改代码如下：</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">neighbours_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours_index</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">__scratch_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">__scratch</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">P_length</span> <span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+        
+    <span class="n">float3</span> <span class="n">avg</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">neighbours_index</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">neighbours_index</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">npt</span> <span class="o">=</span> <span class="n">neighbours</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">avg</span> <span class="o">+=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">npt</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">avg</span> <span class="o">/=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    
+    <span class="n">vstore3</span><span class="p">(</span><span class="n">avg</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">__scratch</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">writeBack</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">neighbours_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours_index</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">__scratch_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">__scratch</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">P_length</span> <span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+        
+    <span class="n">float3</span> <span class="n">avg</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">__scratch</span><span class="p">);</span>
+    
+    <span class="n">vstore3</span><span class="p">(</span><span class="n">avg</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>使用writeBack会降低效率，但是结果会更加准确。</p><p>10000次迭代耗时1.671s（关于耗时，只看相对比例即可，绝对时间和硬件相关）</p><h2 id="总结">总结</h2><p>第一个例子中，了解到如何将属性传入openCL中，另外了解到openCL的一些基础函数，以及writeBack函数。</p><h1 id="案例二-volume">案例二 Volume</h1><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_02.gif" alt="" /></p><h2 id="第一步-run-over-first-writeable-volume">第一步 run over first writeable volume</h2><p>opencl也可以读入volume数据，设置如下：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_6.png" alt="" /></p><p>这里的”first”指的时在binding一栏中，由上到下，第一个设置为writeable的属性或volume。</p><h2 id="第二步-bindings">第二步 bindings</h2><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_7.png" alt="" /></p><p>需设置为volume，默认勾选的时force Alignment，此时不会提供voxel的下标，默认只能读自己的值并写回。函数也只有传入一个数组<code class="language-plaintext highlighter-rouge">global float * height</code> 。</p><p>去掉勾选可以输入以下默认参数</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_z</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_offset</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">height</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">gidx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidy</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidz</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">height_stride_offset</span> <span class="o">+</span> <span class="n">height_stride_x</span> <span class="o">*</span> <span class="n">gidx</span>
+                               <span class="o">+</span> <span class="n">height_stride_y</span> <span class="o">*</span> <span class="n">gidy</span>
+                               <span class="o">+</span> <span class="n">height_stride_z</span> <span class="o">*</span> <span class="n">gidz</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></table></code></div></div><p>另外我们需要volume的分辨率，因此勾上了voxel Resolution， 这样函数就可以使用接口：</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="n">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_z</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_offset</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_z</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">height</span> 
+<span class="p">)</span>
+</pre></table></code></div></div><h2 id="第三步-编写逻辑">第三步 编写逻辑</h2><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_z</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_offset</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_z</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">height</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">gidx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidy</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidz</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">height_stride_offset</span> <span class="o">+</span> <span class="n">height_stride_x</span> <span class="o">*</span> <span class="n">gidx</span>
+                               <span class="o">+</span> <span class="n">height_stride_y</span> <span class="o">*</span> <span class="n">gidy</span>
+                               <span class="o">+</span> <span class="n">height_stride_z</span> <span class="o">*</span> <span class="n">gidz</span><span class="p">;</span>
+                               
+    
+    <span class="kt">float</span> <span class="n">avg</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">dx</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">dx</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">gidx</span> <span class="o">+</span> <span class="n">dx</span><span class="p">;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">height_res_x</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">dy</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">dy</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">gidy</span> <span class="o">+</span> <span class="n">dy</span><span class="p">;</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">height_res_y</span><span class="p">);</span>
+            <span class="n">avg</span> <span class="o">+=</span> <span class="n">height</span><span class="p">[</span> <span class="n">height_stride_offset</span> <span class="o">+</span> <span class="n">height_stride_x</span> <span class="o">*</span> <span class="n">x</span>
+                               <span class="o">+</span> <span class="n">height_stride_y</span> <span class="o">*</span> <span class="n">y</span>
+                               <span class="o">+</span> <span class="n">height_stride_z</span> <span class="o">*</span> <span class="n">gidz</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">height</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg</span> <span class="o">/</span> <span class="mi">9</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>这样处理依然会出现不正确的读取，因此可以向上个案例一样，采用writeBack函数进行优化：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_8.png" alt="" /></p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_z</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_offset</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_z</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">height</span> <span class="p">,</span>
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">scratch</span> 
+                 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">gidx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidy</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidz</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">height_stride_offset</span> <span class="o">+</span> <span class="n">height_stride_x</span> <span class="o">*</span> <span class="n">gidx</span>
+                               <span class="o">+</span> <span class="n">height_stride_y</span> <span class="o">*</span> <span class="n">gidy</span>
+                               <span class="o">+</span> <span class="n">height_stride_z</span> <span class="o">*</span> <span class="n">gidz</span><span class="p">;</span>
+                               
+    
+    <span class="kt">float</span> <span class="n">avg</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">dx</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">dx</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">gidx</span> <span class="o">+</span> <span class="n">dx</span><span class="p">;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">height_res_x</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">dy</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">dy</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">gidy</span> <span class="o">+</span> <span class="n">dy</span><span class="p">;</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">height_res_y</span><span class="p">);</span>
+            <span class="n">avg</span> <span class="o">+=</span> <span class="n">height</span><span class="p">[</span> <span class="n">height_stride_offset</span> <span class="o">+</span> <span class="n">height_stride_x</span> <span class="o">*</span> <span class="n">x</span>
+                               <span class="o">+</span> <span class="n">height_stride_y</span> <span class="o">*</span> <span class="n">y</span>
+                               <span class="o">+</span> <span class="n">height_stride_z</span> <span class="o">*</span> <span class="n">gidz</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">scratch</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg</span> <span class="o">/</span> <span class="mi">9</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">writeBack</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_z</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_offset</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_z</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">height</span> <span class="p">,</span>
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">scratch</span> 
+                 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">gidx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidy</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidz</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">height_stride_offset</span> <span class="o">+</span> <span class="n">height_stride_x</span> <span class="o">*</span> <span class="n">gidx</span>
+                               <span class="o">+</span> <span class="n">height_stride_y</span> <span class="o">*</span> <span class="n">gidy</span>
+                               <span class="o">+</span> <span class="n">height_stride_z</span> <span class="o">*</span> <span class="n">gidz</span><span class="p">;</span>
+                               
+    <span class="n">height</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">scratch</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h2 id="第四步-添加可选mask控制">第四步 添加可选mask控制</h2><p>让输入的mask作为处理的遮罩，并且当没有mask输入时，默认全部处理。</p><p>可以通过绑定参数时，勾选optional来处理。</p><blockquote><p>当参数勾选为optional后，需要在代码中添加宏来控制代码，此时需要注意，如果你将最后一个参数作为optional，再写宏时，需要将逗号“，”写入宏的范围内。</p></blockquote><p>也可以通过避免将最后一个参数绑定为optional来解决这个问题。</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+</pre><td class="rouge-code"><pre>
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_z</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_offset</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_z</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">height</span> <span class="p">,</span>
+                <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">scratch</span> 
+<span class="cp">#ifdef HAS_mask
+</span>                <span class="p">,</span>
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">mask</span> 
+<span class="cp">#endif
+</span>                 
+<span class="p">){</span>
+<span class="p">...</span>
+<span class="p">}</span>
+
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">writeBack</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_z</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_stride_offset</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">height_res_z</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">height</span> <span class="p">,</span>
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">scratch</span> 
+<span class="cp">#ifdef HAS_mask
+</span>                <span class="p">,</span>
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">mask</span> 
+<span class="cp">#endif
+</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">gidx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidy</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">gidz</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">height_stride_offset</span> <span class="o">+</span> <span class="n">height_stride_x</span> <span class="o">*</span> <span class="n">gidx</span>
+                               <span class="o">+</span> <span class="n">height_stride_y</span> <span class="o">*</span> <span class="n">gidy</span>
+                               <span class="o">+</span> <span class="n">height_stride_z</span> <span class="o">*</span> <span class="n">gidz</span><span class="p">;</span>
+                            
+    <span class="k">if</span><span class="p">(</span> <span class="n">mask</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span>                          
+        <span class="n">height</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">scratch</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></table></code></div></div><blockquote><p>需要再次注意，函数参数的顺序是固定的，不能随便修改，不然脚本将无法对齐上下文。</p></blockquote><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_9.png" alt="" /></p><h2 id="总结-1">总结</h2><p>OpenCL对Volume上下文对接需要注意两个地方，第一就是需要在option中修改run over参数到first writeable volume。第二点就是bind属性的时候，volume可以强制对齐或者自定义。</p><p>另外，使用optional参数时，尽量避免将其排列在最后，否则需要在写宏时，将逗号包含进来。</p><p>因为脚本嵌套在上下文中，因此函数的输入参数顺序和命名必须严格拷贝生成的结果。</p><h1 id="案例三-点面属性传递">案例三 点面属性传递</h1><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_03.gif" alt="" /></p><p><del>opencl只能将值输出给一组数据（一个属性）</del>可以写出多组数据，但是因为buffer需要设置为可读可写后会影响性能，因此当我们需要将数据从两个属性间来回写入，将需要两个opencl进行串联，通过使用feedback foreach 和complie block节点来进行优化。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_10.png" alt="" /></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_11.png" alt="" /></p><p>在参数一栏，设置可读和可写。</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="c1">// Write to prim</span>
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">pointcd_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">pointcd</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">primcd_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">primcd</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">points_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">points_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">points</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">prims_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">prims_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">prims</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">primcd_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    
+    <span class="n">float3</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">points_index</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">points_index</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span> <span class="n">total</span><span class="p">,</span> <span class="n">vload3</span><span class="p">(</span> <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pointcd</span><span class="p">));</span>
+    <span class="p">}</span>
+    
+    <span class="n">vstore3</span><span class="p">(</span> <span class="n">total</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">primcd</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre><td class="rouge-code"><pre><span class="c1">// Write to point</span>
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">pointcd_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">pointcd</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">primcd_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">primcd</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">points_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">points_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">points</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">prims_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">prims_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">prims</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">pointcd_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    
+    <span class="n">float3</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">prims_index</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">prims_index</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span> <span class="n">total</span><span class="p">,</span> <span class="n">vload3</span><span class="p">(</span> <span class="n">prims</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">primcd</span><span class="p">));</span>
+    <span class="p">}</span>
+    
+    <span class="n">vstore3</span><span class="p">(</span> <span class="n">total</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">pointcd</span><span class="p">);</span>
+<span class="p">}</span>
+
+</pre></table></code></div></div><h1 id="案例四-采样volume">案例四 采样volume</h1><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_04.gif" alt="" /></p><p>因为节点只能有一个输入，所以要Volume和Primitive进行merge后在输出给opencl节点。</p><p>提供了Volume Transform to Voxel矩阵，可以利用这个矩阵，将世界坐标换算成体素空间。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_12.png" alt="" /></p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">Cd_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">Cd</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">density_stride_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">density_stride_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">density_stride_z</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">density_stride_offset</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">density_res_x</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">density_res_y</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">density_res_z</span><span class="p">,</span> 
+                 <span class="n">float16</span> <span class="n">density_xformtovoxel</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">density</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">Cd_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    
+    <span class="n">float3</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="n">float3</span> <span class="n">col</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">Cd</span><span class="p">);</span>
+    <span class="n">float4</span> <span class="n">voxel_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">density_xformtovoxel</span><span class="p">.</span><span class="n">lo</span><span class="p">.</span><span class="n">lo</span> 
+                     <span class="o">+</span> <span class="n">pos</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">density_xformtovoxel</span><span class="p">.</span><span class="n">lo</span><span class="p">.</span><span class="n">hi</span>
+                     <span class="o">+</span> <span class="n">pos</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">density_xformtovoxel</span><span class="p">.</span><span class="n">hi</span><span class="p">.</span><span class="n">lo</span>
+                     <span class="o">+</span> <span class="mi">1</span>     <span class="o">*</span> <span class="n">density_xformtovoxel</span><span class="p">.</span><span class="n">hi</span><span class="p">.</span><span class="n">hi</span><span class="p">;</span>
+
+                     
+    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">floor</span><span class="p">(</span><span class="n">voxel_pos</span><span class="p">.</span><span class="n">x</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">density_res_x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">floor</span><span class="p">(</span><span class="n">voxel_pos</span><span class="p">.</span><span class="n">y</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">density_res_y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">z</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">floor</span><span class="p">(</span><span class="n">voxel_pos</span><span class="p">.</span><span class="n">z</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">density_res_z</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    
+    <span class="k">if</span><span class="p">(</span> <span class="n">density</span><span class="p">[</span> <span class="n">density_stride_offset</span> 
+            <span class="o">+</span> <span class="n">density_stride_x</span> <span class="o">*</span> <span class="n">x</span>
+            <span class="o">+</span> <span class="n">density_stride_y</span> <span class="o">*</span> <span class="n">y</span>
+            <span class="o">+</span> <span class="n">density_stride_z</span> <span class="o">*</span> <span class="n">z</span> <span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mo">05</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">col</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+        <span class="n">vstore3</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">Cd</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>需要注意的是， 利用视频中的方法计算体素位置，最后采样数会有些偏差，需要将判断改为大于0的数。</p><p>应该还有其他利用矩阵的方法，待查证。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_13.png" alt="" /></p><p>此处已将VDB转换成volume。</p><h1 id="案例五-workset-01">案例五 workset 01</h1><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_05.gif" alt="" /></p><p>我们可以利用Workset属性进行控制迭代的次数。实现类似于while循环，达到优化的目的。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_14.png" alt="" /></p><h2 id="无workset版本">无workset版本</h2><p>我们将相连点序号和相邻点距离保存成数组：</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="c1">// init Node</span>
+<span class="n">i</span><span class="p">[]</span><span class="err">@</span><span class="n">neighbours</span> <span class="o">=</span> <span class="n">neighbours</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="err">@</span><span class="n">ptnum</span><span class="p">);</span>
+<span class="kt">float</span> <span class="err">@</span><span class="n">elens</span><span class="p">[];</span>
+
+<span class="n">foreach</span><span class="p">(</span><span class="kt">int</span> <span class="n">pt</span><span class="p">;</span> <span class="n">i</span><span class="p">[]</span><span class="err">@</span><span class="n">neighbours</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector</span> <span class="n">epos</span> <span class="o">=</span> <span class="n">point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">"P"</span><span class="p">,</span> <span class="n">pt</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">elen</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="err">@</span><span class="n">P</span><span class="p">,</span> <span class="n">epos</span><span class="p">);</span>
+    <span class="n">append</span><span class="p">(</span><span class="err">@</span><span class="n">elens</span><span class="p">,</span> <span class="n">elen</span><span class="p">);</span>
+    
+<span class="p">}</span>
+
+<span class="n">v</span><span class="err">@</span><span class="n">dP</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></table></code></div></div><p>然后将模型进行修改，然后利用opencl进行平滑。</p><p>导入一下四个参数：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_15.png" alt="" /></p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">dP_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">dP</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">neighbours_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">elens_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">elens_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">elens</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">P_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    
+    <span class="n">float3</span> <span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">weight</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">neighbours_index</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">end</span>   <span class="o">=</span> <span class="n">neighbours_index</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">float3</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">float3</span> <span class="n">npos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">neighbours</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">P</span><span class="p">);</span>
+        <span class="kt">float</span> <span class="n">elen</span> <span class="o">=</span> <span class="n">elens</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        
+        <span class="kt">float</span> <span class="n">actuallen</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">pos</span> <span class="o">-</span> <span class="n">npos</span><span class="p">);</span>
+        <span class="kt">float</span> <span class="n">displace</span> <span class="o">=</span> <span class="n">elen</span> <span class="o">-</span> <span class="n">actuallen</span><span class="p">;</span>
+        <span class="n">actuallen</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">actuallen</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mo">001</span><span class="n">f</span><span class="p">);</span>
+        
+				<span class="c1">// 求移动位移，除以actuallen是为了归一化移动方向</span>
+        <span class="n">delta</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pos</span> <span class="o">-</span> <span class="n">npos</span><span class="p">)</span> <span class="o">*</span> <span class="n">displace</span> <span class="o">/</span> <span class="n">actuallen</span><span class="p">;</span>
+        
+        <span class="n">weight</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="n">delta</span> <span class="o">/=</span> <span class="n">weight</span><span class="p">;</span>
+    
+    <span class="n">vstore3</span><span class="p">(</span> <span class="n">delta</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">dP</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">writeBack</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">dP_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">dP</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">neighbours_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">elens_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">elens_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">elens</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">P_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    
+    <span class="n">float3</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="n">float3</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">dP</span><span class="p">);</span>
+    <span class="n">pos</span> <span class="o">+=</span> <span class="n">delta</span><span class="p">;</span>
+    <span class="n">vstore3</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h2 id="workset版本">workset版本</h2><p>先在输入模型的Detail属性中添加两个整数数组属性：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_16.png" alt="" /></p><p>然后修改opencl节点的run over 为 “Detail Attribute of Worksets”,</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_17.png" alt="" /></p><p>再然后我们将ws_len作为参数导入opencl</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_18.png" alt="" /></p><p>修改代码如下：</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">worksets_begin</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">worksets_length</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">dP_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">dP</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">neighbours_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">elens_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">elens_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">elens</span> <span class="p">,</span>
+                    <span class="kt">int</span> <span class="n">ws_len_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">ws_len_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">ws_len</span>
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">worksets_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">idx</span> <span class="o">+=</span> <span class="n">worksets_begin</span><span class="p">;</span>
+    
+    <span class="n">float3</span> <span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">weight</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">neighbours_index</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">end</span>   <span class="o">=</span> <span class="n">neighbours_index</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">float3</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">float3</span> <span class="n">npos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">neighbours</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">P</span><span class="p">);</span>
+        <span class="kt">float</span> <span class="n">elen</span> <span class="o">=</span> <span class="n">elens</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        
+        <span class="kt">float</span> <span class="n">actuallen</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">pos</span> <span class="o">-</span> <span class="n">npos</span><span class="p">);</span>
+        <span class="kt">float</span> <span class="n">displace</span> <span class="o">=</span> <span class="n">elen</span> <span class="o">-</span> <span class="n">actuallen</span><span class="p">;</span>
+        <span class="n">actuallen</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">actuallen</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mo">001</span><span class="n">f</span><span class="p">);</span>
+        
+        <span class="n">delta</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pos</span> <span class="o">-</span> <span class="n">npos</span><span class="p">)</span> <span class="o">*</span> <span class="n">displace</span> <span class="o">/</span> <span class="n">actuallen</span><span class="p">;</span>
+        
+        <span class="n">weight</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="n">delta</span> <span class="o">/=</span> <span class="n">weight</span><span class="p">;</span>
+    
+    <span class="n">vstore3</span><span class="p">(</span> <span class="n">delta</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">dP</span><span class="p">);</span>
+    
+    <span class="c1">// stop iteration by using workset length</span>
+    <span class="n">ws_len</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//当我们修改此值，默认值worksets_length也会随之更改。当我们设置为0时，迭代停止</span>
+<span class="p">}</span>
+
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">writeBack</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">worksets_begin</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">worksets_length</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">dP_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">dP</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">neighbours_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">neighbours</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">elens_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">elens_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">elens</span> <span class="p">,</span>
+                    <span class="kt">int</span> <span class="n">ws_len_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">ws_len_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">ws_len</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">worksets_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">idx</span> <span class="o">+=</span> <span class="n">worksets_begin</span><span class="p">;</span>
+    
+    
+    <span class="n">float3</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="n">float3</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">dP</span><span class="p">);</span>
+    <span class="n">pos</span> <span class="o">+=</span> <span class="n">delta</span><span class="p">;</span>
+    <span class="n">vstore3</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    
+    <span class="c1">// if delta is more than my condition, we will overwrite ws_len, </span>
+    <span class="c1">// then loop continue. </span>
+    <span class="c1">// In other side, we do nothing, and iteration will stop.</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">length</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mo">01</span> <span class="p">)</span>
+        <span class="n">ws_len</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">worksets_length</span><span class="p">;</span>
+
+		<span class="c1">// 由于delta大部分都是小于0.01的，因此我们只能先默认停止，在回写函数中，看是否要继续。</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>通过<code class="language-plaintext highlighter-rouge">length(delta) &gt; 0.01</code> 就可以实现了根据条件控制循环。</p><h1 id="案例六-workset02-优化">案例六 workset02 优化</h1><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_19.png" alt="" /></p><p>本案例将会使用更为准确的方法，来进行平滑，同时代码也会更加简洁。</p><p>本案例通过使用restlength数据，进行优化。因此要在primitive类形数据上进行循环。</p><p>同时我们按照四次进行隔行计算数据，如下图：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_20.png" alt="" /></p><p>这样平滑后，我们可以获得更好的效果。当然也会更慢。</p><p>先将线段从新排序：</p><div class="language-cpp highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="kt">int</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">primpoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="err">@</span><span class="n">primnum</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">primpoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="err">@</span><span class="n">primnum</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="n">r0</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">/</span> <span class="mi">21</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">/</span> <span class="mi">21</span><span class="p">;</span>
+<span class="n">p0</span> <span class="o">%=</span> <span class="mi">21</span><span class="p">;</span>
+<span class="n">p1</span> <span class="o">%=</span> <span class="mi">21</span><span class="p">;</span>
+
+<span class="k">if</span> <span class="p">((</span><span class="n">p0</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="c1">// Joins two colums</span>
+    <span class="n">i</span><span class="err">@</span><span class="n">pass</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">p0</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="err">@</span><span class="n">pass</span> <span class="o">=</span> <span class="n">r0</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>然后设置workset以四次进行平滑：</p><div class="language-cpp highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="kt">int</span> <span class="err">@</span><span class="n">workset_begin</span><span class="p">[];</span>
+<span class="kt">int</span> <span class="err">@</span><span class="n">workset_len</span><span class="p">[];</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">append</span><span class="p">(</span><span class="err">@</span><span class="n">workset_begin</span><span class="p">,</span> <span class="mi">210</span> <span class="o">*</span> <span class="n">i</span><span class="p">);</span>
+    <span class="n">append</span><span class="p">(</span><span class="err">@</span><span class="n">workset_len</span><span class="p">,</span> <span class="mi">210</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>opencl代码如下：</p><div class="language-cpp highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">worksets_begin</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">worksets_length</span><span class="p">,</span>  
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">restlength_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">restlength</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">points_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">points_index</span><span class="p">,</span> 
+                  <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">points</span>
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">worksets_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">idx</span> <span class="o">+=</span> <span class="n">worksets_begin</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">p0idx</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="n">points_index</span><span class="p">[</span><span class="n">idx</span><span class="p">]];</span>
+    <span class="kt">int</span> <span class="n">p1idx</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="n">points_index</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+    
+    <span class="n">float3</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">p0idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="n">float3</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">p1idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    
+    <span class="kt">float</span> <span class="n">actuallen</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">p0</span><span class="o">-</span><span class="n">p1</span><span class="p">);</span>
+    <span class="n">actuallen</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">actuallen</span><span class="p">,</span> <span class="mf">0.001</span><span class="n">f</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">restlength</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+
+    <span class="kt">float</span> <span class="n">change</span> <span class="o">=</span> <span class="n">rest</span> <span class="o">-</span> <span class="n">actuallen</span><span class="p">;</span>
+    <span class="n">float3</span> <span class="n">displace</span> <span class="o">=</span> <span class="p">(</span><span class="n">p0</span> <span class="o">-</span> <span class="n">p1</span><span class="p">)</span> <span class="o">*</span> <span class="n">change</span> <span class="o">/</span> <span class="n">actuallen</span><span class="p">;</span>
+    <span class="n">displace</span> <span class="o">/=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">p0</span> <span class="o">+=</span> <span class="n">displace</span><span class="p">;</span>
+    <span class="n">p1</span> <span class="o">-=</span> <span class="n">displace</span><span class="p">;</span>
+    
+    <span class="n">vstore3</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p0idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="n">vstore3</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p1idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h1 id="案例七-workset03-访问其他模型数据">案例七 workset03 访问其他模型数据</h1><p>因为opencl只能有一个输入，如果想让模型A访问模型B该如何实现？</p><p>我们可以利用workset来实现。</p><p>案例如下：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_21.png" alt="" /></p><p>上图中，0，1点需要访问一点范围内的中间直线的数据area，并累加到自己的density参数中。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_07.gif" alt="" /></p><p>我们可以这样设置，将两个模型进行merge。但是要注意的是，先输入0，1号点，再添加直线。</p><p>也就是我们需要写入的点在前，需要访问的点在后。</p><p>然后设置workset:</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">i</span><span class="p">[]</span><span class="err">@</span><span class="n">_workset_begin</span><span class="p">;</span>
+<span class="n">i</span><span class="p">[]</span><span class="err">@</span><span class="n">_workset_length</span><span class="p">;</span>
+<span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[]</span><span class="err">@</span><span class="n">_workset_begin</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[]</span><span class="err">@</span><span class="n">_workset_length</span><span class="p">,</span> <span class="n">npoints</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_22.png" alt="" /></p><p>节点图</p><p>设置opencl的参数：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_23.png" alt="" /></p><p>代码如下：</p><div class="language-c highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+ <span class="kt">int</span> <span class="n">worksets_begin</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">worksets_length</span><span class="p">,</span> 
+                 <span class="kt">int</span> <span class="n">P_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">P</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">density_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">density</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">area_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">area</span> <span class="p">,</span>
+                 <span class="kt">int</span>     <span class="n">iteration</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">iter_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">iter</span><span class="p">,</span>
+                  <span class="kt">float</span>  <span class="n">dis</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">worksets_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">idx</span> <span class="o">+=</span> <span class="n">worksets_begin</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">iter</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">P_length</span> <span class="o">-</span> <span class="n">worksets_length</span><span class="p">))</span>
+        <span class="k">return</span><span class="p">;</span>
+        
+    
+    <span class="n">float3</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    
+    <span class="kt">int</span> <span class="n">cur_t</span> <span class="o">=</span> <span class="p">(</span><span class="n">worksets_length</span> <span class="o">+</span> <span class="n">iter</span><span class="p">[</span><span class="n">idx</span><span class="p">]);</span>
+    
+    <span class="n">float3</span> <span class="n">tpos</span> <span class="o">=</span> <span class="n">vload3</span><span class="p">(</span><span class="n">cur_t</span> <span class="p">,</span> <span class="n">P</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">l</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">tpos</span> <span class="o">-</span> <span class="n">pos</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">dis</span> <span class="p">){</span>
+
+       <span class="n">density</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">area</span><span class="p">[</span><span class="n">cur_t</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">iter</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>上图中，设置了一个可写变量iter，作为记录当前循环的次数，每次循环，我们访问直线上的一个点数据P和area。这里的<code class="language-plaintext highlighter-rouge">int cur_t = (worksets_length + iter[idx]);</code> 就是用来计算当前迭代要访问的点序号。因为将模型AB合并在一起，我们只需要处理前面两个点，后面的点作为可访问参数我们在每次迭代时单独访问。</p><p>调节参数dis可以控制计算的范围。</p><h1 id="关于workset">关于workset</h1><p>在OpenCL中，有work-item和work-group的概念，将多个work-item组合成一个group后，会通过一次提交进入堆栈中等待一起处理。可以理解为一个work-group为一个最小提交单元（不知道对不对，懂得大神可以指出）。所有work-item都是并行进行，并执行kernel内核函数。</p><p>一次任务，所有的计算单元大小为<code class="language-plaintext highlighter-rouge">global size</code>，而每个组的大小称为<code class="language-plaintext highlighter-rouge">local size</code>。而组数可由 <code class="language-plaintext highlighter-rouge">global size / local size</code> 得到。每个work-item有一个global id，也有一个work-group内部的local-id，而work-group也有自己的work-id。可以申请1、2和3维的work-item和work-group。当然这houdini已经帮我们做好了，我们只需要编写每个item中运行的内核函数就行了。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_opencl_img_26.png" alt="" /></p><p>而在Houdini中，local size默认就是256，所以我们设置的workset其实是global size的大小。相当于我们分了几批group进行渲染。当然workset中数组越多，分的批次越多（之间是串行），速度也就越慢。而每个批次设置的global size越大，则并行的group就越多。记住global size尽可能为2的幂数。</p><p>观看下面参数对比：</p><p>处理 87780 个数据时：</p><p>workset_len ： 128</p><p>cook time ： 4154 ms</p><p>workset_len ：8192</p><p>cook time : 73.37ms</p><p><strong>提升 56.7 倍！</strong></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_24.png" alt="" /></p><p>勾上 <strong>Using Single Workgroup If Possible</strong> 后，houdini会尽可能的优化workgroup的大小。但是也会经常导致报错：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/hou_openCL_img_25.png" alt="" /></p><p>报错后，可以取消该选项。</p><h1 id="案例八-创建自定义函数">案例八 创建自定义函数</h1><p>因为没法编辑主程序（host program），houdini已经为我们封装好了，只有两个内核函数可以使用，一个就是Kernel函数，一个是writeBack函数。</p><p>如果我们需要反复用到一段代码，可以创建自定义函数，但是此时不能用 __kernel 或 kernel做为关键字了。而是像正常函数一样直接创建。</p><div class="language-cpp highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="kt">float</span> <span class="nf">myfunc</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">c_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">c</span> <span class="p">,</span>
+                 <span class="kt">float</span>  <span class="n">a</span> <span class="p">,</span>
+                 <span class="kt">float</span>  <span class="n">b</span> 
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">c_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">c</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">myfunc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><h1 id="案例九-使用ramp参数">案例九 使用Ramp参数</h1><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Houdini_openCL_09.gif" alt="Houdini_openCL_09.gif" /></p><p>设置为Ramp参数后，处理曲线参数外，还有一个Ramp Size，其实这个值的大小就是量化的大小。如果你有100个点要映射到曲线上，这里就改为100.</p><div class="language-glsl highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="n">kernel</span> <span class="kt">void</span> <span class="nf">kernelName</span><span class="p">(</span> 
+                 <span class="kt">int</span> <span class="n">Cd_length</span><span class="p">,</span> 
+                 <span class="n">global</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">Cd</span> <span class="p">,</span>
+                 <span class="kt">int</span> <span class="n">ramp_size</span><span class="p">,</span> 
+                 <span class="n">constant</span> <span class="kt">float</span> <span class="o">*</span> <span class="n">ramp_vals</span>
+<span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_global_id</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">Cd_length</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">float3</span> <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">float3</span><span class="p">)(</span><span class="n">ramp_vals</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">vstore3</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">Cd</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>直接使用下标就能获得值：<code class="language-plaintext highlighter-rouge">ramp_vals[idx]</code></p><p>另外在houdini18.5版本中，ramp的参数映射好像不起作用，可利用参数的Callback Script来实现。</p><p>在你的外层节点（或HDA）界面添加一个Ramp参数，修改其Callback Script为Python，然后输入以下代码：</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1"># callback script 需要写在一行中，用分号隔开 ，相对路径开头不要添加斜杠
+</span><span class="n">dummy</span><span class="o">=</span><span class="n">hou</span><span class="p">.</span><span class="n">pwd</span><span class="p">().</span><span class="n">node</span><span class="p">(</span><span class="s">"/obj/to"</span><span class="p">).</span><span class="n">parm</span><span class="p">(</span><span class="s">"ramp_to"</span><span class="p">);</span> 
+<span class="n">thisRamp</span><span class="o">=</span><span class="n">hou</span><span class="p">.</span><span class="n">pwd</span><span class="p">().</span><span class="n">parm</span><span class="p">(</span><span class="s">"ramp_from"</span><span class="p">).</span><span class="nb">eval</span><span class="p">();</span> 
+<span class="n">dummy</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">thisRamp</span><span class="p">)</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/houdini/'>Houdini</a>, <a href='/categories/script/'>Script</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/houdini/" class="post-tag no-text-decoration" >Houdini</a> <a href="/tags/opencl/" class="post-tag no-text-decoration" >OpenCL</a> <a href="/tags/computeshader/" class="post-tag no-text-decoration" >ComputeShader</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=如何在Houdini中使用OpenCL - Walk In Cloud&url=https://liuzkai.github.io/posts/HoutoUsingOpenCLInHoudini/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=如何在Houdini中使用OpenCL - Walk In Cloud&u=https://liuzkai.github.io/posts/HoutoUsingOpenCLInHoudini/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=如何在Houdini中使用OpenCL - Walk In Cloud&url=https://liuzkai.github.io/posts/HoutoUsingOpenCLInHoudini/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/HoutoUsingOpenCLInHoudini/">如何在Houdini中使用OpenCL</a><li><a href="/posts/how_to_use_unreal_python/">Unreal Python 入门</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/computeshader/">ComputeShader</a> <a class="post-tag" href="/tags/houdini/">Houdini</a> <a class="post-tag" href="/tags/opencl/">OpenCL</a> <a class="post-tag" href="/tags/python/">Python</a> <a class="post-tag" href="/tags/unreal/">Unreal</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/how_to_use_unreal_python/"><div class="card-body"> <span class="timeago small" > Jan 25, 2021 <i class="unloaded">2021-01-25T21:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Unreal Python 入门</h3><div class="text-muted small"><p> 为什么使用Unreal Python Unreal的蓝图，作为一种可视化脚本语言，已将非常强大了。它不香吗，为什么还要使用python来做脚本呢？ 第一个原因正是蓝图的可视化，在项目进行中工具变得复杂后，反而不易于维护。而以文本形式的python拥有了先天的优势。 第二个原因是python的易扩展性，是蓝图无法比拟。python有丰富的库，同时DCC软件普遍支持Python的API，因...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/how_to_use_unreal_python/" class="btn btn-outline-primary"><p>Unreal Python 入门</p></a> <span class="btn btn-outline-primary disabled"><p>-</p></span></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('.post-content img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://twitter.com/WalkinCloud2">ZhongkaiLiu</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/computeshader/">ComputeShader</a> <a class="post-tag" href="/tags/houdini/">Houdini</a> <a class="post-tag" href="/tags/opencl/">OpenCL</a> <a class="post-tag" href="/tags/python/">Python</a> <a class="post-tag" href="/tags/unreal/">Unreal</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://liuzkai.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>

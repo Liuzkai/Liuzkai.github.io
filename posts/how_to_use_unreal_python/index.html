@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="en" mode="dark" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.7.2"><meta name="generator" content="Jekyll v4.2.0" /><meta property="og:title" content="Unreal Python 入门" /><meta name="author" content="Zhongkailiu" /><meta property="og:locale" content="en_US" /><meta name="description" content="为什么使用Unreal Python" /><meta property="og:description" content="为什么使用Unreal Python" /><link rel="canonical" href="https://liuzkai.github.io/posts/how_to_use_unreal_python/" /><meta property="og:url" content="https://liuzkai.github.io/posts/how_to_use_unreal_python/" /><meta property="og:site_name" content="Walk In Cloud" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2021-01-25T21:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Unreal Python 入门" /><meta name="twitter:site" content="@WalkinCloud2" /><meta name="twitter:creator" content="@Zhongkailiu" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"author":{"@type":"Person","name":"Zhongkailiu"},"description":"为什么使用Unreal Python","url":"https://liuzkai.github.io/posts/how_to_use_unreal_python/","@type":"BlogPosting","headline":"Unreal Python 入门","dateModified":"2021-05-23T10:17:57+08:00","datePublished":"2021-01-25T21:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://liuzkai.github.io/posts/how_to_use_unreal_python/"},"@context":"https://schema.org"}</script><title>Unreal Python 入门 | Walk In Cloud</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" href="/assets/css/post.css" as="style"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-JWC7CE0EWK"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JWC7CE0EWK'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/IMG_0795.JPG" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Walk In Cloud</a></div><div class="site-subtitle font-italic">I'm a tech artist in China. I work with unreal and houdini.</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/tabs/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tabs/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/tabs/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/tabs/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/liuzkai" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/WalkinCloud2" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['liuzkai2012','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>Unreal Python 入门</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Unreal Python 入门</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Mon, Jan 25, 2021, 9:00 PM +0800" > Jan 25, 2021 <i class="unloaded">2021-01-25T21:00:00+08:00</i> </span> by <span class="author"> Zhongkailiu </span></div><div> <span> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sun, May 23, 2021, 10:17 AM +0800" > May 23, 2021 <i class="unloaded">2021-05-23T10:17:57+08:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2444 words">13 min</span></div></div><div class="post-content"><h1 id="为什么使用unreal-python">为什么使用Unreal Python</h1><p>Unreal的蓝图，作为一种可视化脚本语言，已将非常强大了。它不香吗，为什么还要使用python来做脚本呢？</p><p>第一个原因正是蓝图的可视化，在项目进行中工具变得复杂后，反而不易于维护。而以文本形式的python拥有了先天的优势。</p><p>第二个原因是python的易扩展性，是蓝图无法比拟。python有丰富的库，同时DCC软件普遍支持Python的API，因此python是CG行业普遍使用的管线语言。</p><p>第三个原因是编译问题。虽然蓝图的编译也是非常快的(是的，蓝图也要编译一下)，但随着工程的复杂之后，蓝图启动编辑和编译也会变的越来越慢，而使用python的话，基本上不需要编辑。在工作体验上是非常优雅和愉悦的，你使用过python之后就会不得不深陷其中。</p><h2 id="python与蓝图异同点">Python与蓝图异同点</h2><p>python可以调用所有蓝图可以调用的方法，但是python并不能创建类并在场景中使用，同时python也不能用于运行时。python只能用于editor的功能脚本化，因此建议开启Editor Script Utilities Plugin来扩展python的方法调用。</p><p>在C++中给function声明UFUNCTION时，只要设置为蓝图可调用(BlueprintCallable)，此方法python也就可以使用了。</p><h1 id="环境搭建">环境搭建</h1><p>首先我们需要开启unreal的python功能，同时生成unreal.py文件方便我们写代码时可以提供自动补全功能。另外介绍以下IDE的环境设置和几种Unreal触发python脚本的方法。</p><p>本案例使用的是Unreal 4.26.0版本</p><h2 id="开启-unreal-python">开启 Unreal Python</h2><p>在Plugins中查找python，并开启该功能，然后重启Editor</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Python_enable%202021-01-25_20-33-14.png" alt="enable_python_plugin" /></p><p>在Editor Settings中开启Python Developer Mode：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Python_developerMode.png" alt="Python Developer Mode" /></p><p>然后重启Editor。此时在Project/Intermediate/PythonStub路径下会生成一个unreal.py文件，该文件主要用于IDE生成自动补全功能的头文件。</p><h2 id="配置ied环境实现自动补全">配置IED环境，实现自动补全</h2><h3 id="配置pycharm">配置pycharm</h3><p>我们将上面得到的unreal.py文件路径添加到python interpreter paths中：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Untitled.png" alt="setting pycharm" /></p><p>由于unreal.py文件过于巨大（23Mb左右），超出了pycharm默认的代码预览缓存。因此我们还需要修改以下默认的扫描缓存阈值，如下图打开Properties：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Untitled%20(1).png" alt="" /></p><p>输入：</p><div class="language-json highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="err">idea.max.intellisense.filesize=</span><span class="mi">500000</span><span class="w">
+</span></pre></table></code></div></div><p>可以修改一个比较大的值，这个值过大会导致占用更多的内存，因此请谨慎调节。</p><h3 id="配置vscode">配置vscode</h3><p>如果你使用vscode，只需安装pylance插件，并在setting中将PythonStub文件夹的路径填写到Python:Analysis:Extra Paths一栏中。</p><h2 id="unreal调用python的方法">Unreal调用python的方法</h2><h3 id="1-命令行调用">1 命令行调用</h3><p>点击~键或在Output Log窗口下，可以切换cmd为python，直接在输入栏中输入python代码回车后即可运行。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_cmd.png" alt="" /></p><p>这个方法适合简单的命令。也可以输入<code class="language-plaintext highlighter-rouge">run C:/path/to/your/file/filename.py</code> 来运行一整个脚本。</p><h3 id="2-调用python脚本命令">2 调用Python脚本命令</h3><p>在File菜单栏下使用<em>Execute Python Script</em> 可以运行py文件：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_execute.png" alt="" /></p><p>这个方法适合没有交互，但是复杂命令的脚本。</p><h3 id="3-在蓝图中调用">3 在蓝图中调用</h3><p>在蓝图中，可以创建Execute python command和Execute python script两个节点。分别代表了上面两种调用方法。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_bp_node.png" alt="python node" /></p><p>特别说明一下，<strong>Execute Python Script</strong> 节点可以添加输入和输出，只需在代码中使用该输入的名称作为变量即可获得该输出的数据，类似材质里的Custom Node，这样Python和蓝图的交互成为可能。</p><h3 id="4-在content中运行">4 在Content中运行</h3><p>在Editor Setting中，找到Python一栏，勾选上Enable Content Browser Integration。这样就可以在Content中创建python脚本了。但是如果你想编辑该脚本，需要使用IDE打开文件进行编辑。在文件上右键选择run可以运行脚本。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/python_content.png" alt="Content Python File" /></p><h3 id="5-在启动编辑器时运行">5 在启动编辑器时运行</h3><p>这Project Settings-&gt;Python-&gt;Startup Scripts，添加脚本路径，选择触发阶段，在启动编辑时就会自动的运行该脚本。适合一些需要初始化编辑器资源的脚本自动加载运行。</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/Python_Startup_Scripts.png" alt="Startup Scripts" /></p><p>随着版本的更迭，或我的疏忽，可能还有其他调用python的方法。当然你也可以在C++层面直接调用python脚本，但是这已经不是我们所关注的部分了。通常结合Editor Utility Widget和python node是一个比较好的方案，也是我常用的方案。下面的例子都是使用该种方法实现。</p><h1 id="常用的类">常用的类</h1><p>首先我们要做的就是把<code class="language-plaintext highlighter-rouge">unreal</code>库导入：</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="c1"># you shall import any you need libraries else,
+# but you have to make sure it in the unreal python path
+</span><span class="kn">import</span> <span class="nn">unreal</span>
+</pre></table></code></div></div><p>我们可以把中间结果打印到output log中，便于我们debug。</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1"># Out log in the output log window
+</span><span class="n">unreal</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">"Hello World"</span><span class="p">)</span>
+<span class="n">unreal</span><span class="p">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s">"I'm yellow！This a waring!"</span><span class="p">)</span>
+<span class="n">unreal</span><span class="p">.</span><span class="n">log_error</span><span class="p">(</span><span class="s">"I'm red. I'm wrong!"</span><span class="p">)</span>
+</pre></table></code></div></div><p>接下来，我们就可以写我们的业务代码了。</p><p>常用的场景和资源管理器中相关的命令都在<code class="language-plaintext highlighter-rouge">unreal.EditorLevelLibrary</code>和<code class="language-plaintext highlighter-rouge">unreal.EditorUtilityLibrary</code>两个类中。我们首先从这两个类进行入手：</p><p>例如获得选中的物体：</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1"># get selected actors
+</span><span class="n">actors</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">EditorLevelLibrary</span><span class="p">.</span><span class="n">get_selected_level_actors</span><span class="p">()</span>
+<span class="c1"># get selected assets
+</span><span class="n">assets</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">EditorUtilityLibrary</span><span class="p">.</span><span class="n">get_selected_assets</span><span class="p">()</span>
+</pre></table></code></div></div><p>这两个函数在蓝图中对应的节点是：</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/get_Level_actors.png" alt="get level actors node" /></p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/get_selected_assets.png" alt="get selected asset node" /></p><p>这两个节点的Target就是定义的类的位置，同时也是Python的类的名称。当你找不到对应的function时，可以找找蓝图的节点，从而找到灵感。</p><p>当然你也可以查找<a href="https://docs.unrealengine.com/en-US/PythonAPI/index.html">Unreal Python API Documentation</a>。</p><p>下面几个例子由浅入深的讲解unreal python的使用方法，并提示Python与蓝图的异同点。</p><h2 id="找某一类actor">找某一类Actor</h2><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="n">actors</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">EditorLevelLibrary</span><span class="p">.</span><span class="n">get_all_level_actors</span><span class="p">()</span>
+<span class="c1"># Filter by class
+</span><span class="n">static_mesh_actors</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">EditorFilterLibrary</span><span class="p">.</span><span class="n">by_class</span><span class="p">(</span><span class="n">actors</span><span class="p">,</span><span class="n">unreal</span><span class="p">.</span><span class="n">StaticMeshActor</span><span class="p">,</span><span class="n">unreal</span><span class="p">.</span><span class="n">EditorScriptingFilterType</span><span class="p">.</span><span class="n">INCLUDE</span><span class="p">)</span>
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">unreal.EditorFilterLibrary</code>类可以将输入的序列根据条件进行分类。</p><p>或者：</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">static_mesh_actor</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">GameplayStatics</span><span class="p">.</span><span class="n">get_all_actors_of_class</span><span class="p">(</span><span class="n">unreal</span><span class="p">.</span><span class="n">EditorLevelLibrary</span><span class="p">.</span><span class="n">get_editor_world</span><span class="p">(),</span><span class="n">unreal</span><span class="p">.</span><span class="n">StaticMeshActor</span><span class="p">)</span>
+</pre></table></code></div></div><h2 id="从actor找asset">从Actor找Asset</h2><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="c1"># get the first selected actors
+</span><span class="n">actors</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">EditorLevelLibrary</span><span class="p">.</span><span class="n">get_selected_level_actors</span><span class="p">()</span>
+<span class="n">actor</span> <span class="o">=</span> <span class="n">actors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">actors</span> <span class="k">else</span> <span class="bp">None</span>
+<span class="c1"># we check if actor is static mesh or not
+</span><span class="k">if</span> <span class="n">actor</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actor</span><span class="p">,</span> <span class="n">unreal</span><span class="p">.</span><span class="n">StaticMeshActor</span><span class="p">):</span>
+    <span class="c1"># get the static mesh component
+</span>    <span class="n">sm_comp</span> <span class="o">=</span> <span class="n">actor</span><span class="p">.</span><span class="n">get_component_by_class</span><span class="p">(</span><span class="n">unreal</span><span class="p">.</span><span class="n">StaticMeshComponent</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sm_comp</span><span class="p">:</span>
+        <span class="c1"># load the asset!
+</span>        <span class="n">sm</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">load_asset</span><span class="p">(</span><span class="n">sm_comp</span><span class="p">.</span><span class="n">static_mesh</span><span class="p">.</span><span class="n">get_path_name</span><span class="p">())</span>
+        <span class="n">unreal</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
+</pre></table></code></div></div><p>使用<code class="language-plaintext highlighter-rouge">isinstance()</code>函数可以判断能否拿到我们需要的对象，同时也可以让IDE提供进一步的自动补全功能。因为我们并不能在IDE中运行脚本让其知道这些变量的真实类型，所以IDE的自动补全功能不能很好的识别变量的类型。而使用<code class="language-plaintext highlighter-rouge">isinstance()</code>既可以健壮了代码，也为IDE补全功能提供支持，可谓一举两得。（类似蓝图中Cast to某一类节点）</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="c1"># broswer to the asset position
+</span><span class="n">asset_path</span> <span class="o">=</span> <span class="n">sm_comp</span><span class="p">.</span><span class="n">static_mesh</span><span class="p">.</span><span class="n">get_path_name</span><span class="p">()</span>
+<span class="n">unreal</span><span class="p">.</span><span class="n">EditorAssetLibrary</span><span class="p">.</span><span class="n">sync_browser_to_objects</span><span class="p">([</span><span class="n">asset_path</span><span class="p">])</span>
+</pre></table></code></div></div><p>使用<code class="language-plaintext highlighter-rouge">sync_browser_to_objects()</code>可以直接定位到资源的位置，注意函数输入的是列表。</p><h2 id="从asset找actor">从Asset找Actor</h2><p>pending</p><h2 id="import">Import</h2><p>导入的基本方法：</p><blockquote><p>创建输入任务，然后运行任务。</p></blockquote><p>Fbx导入有一些参数，需要我们提前设置。而贴图的导入相对简单，没有参数设置。</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">fbx_static_mesh_import_data</span><span class="p">():</span>
+    <span class="s">""" static mesh import data """</span>
+    <span class="n">_static_mesh_import_data</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">FbxStaticMeshImportData</span><span class="p">()</span>
+    <span class="n">_static_mesh_import_data</span><span class="p">.</span><span class="n">import_translation</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">Vector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">_static_mesh_import_data</span><span class="p">.</span><span class="n">import_rotation</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">Rotator</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">_static_mesh_import_data</span><span class="p">.</span><span class="n">import_uniform_scale</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">_static_mesh_import_data</span><span class="p">.</span><span class="n">combine_meshes</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_static_mesh_import_data</span><span class="p">.</span><span class="n">generate_lightmap_u_vs</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_static_mesh_import_data</span><span class="p">.</span><span class="n">auto_generate_collision</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">return</span> <span class="n">_static_mesh_import_data</span>
+
+
+<span class="k">def</span> <span class="nf">fbx_skeletal_mesh_import_data</span><span class="p">():</span>
+    <span class="s">""" skeletal mesh import data """</span>
+    <span class="n">_skeletal_mesh_import_data</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">FbxSkeletalMeshImportData</span><span class="p">()</span>
+    <span class="n">_skeletal_mesh_import_data</span><span class="p">.</span><span class="n">import_translation</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">Vector</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">_skeletal_mesh_import_data</span><span class="p">.</span><span class="n">import_rotation</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">Rotator</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">_skeletal_mesh_import_data</span><span class="p">.</span><span class="n">import_uniform_scale</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">_skeletal_mesh_import_data</span><span class="p">.</span><span class="n">import_morph_targets</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_skeletal_mesh_import_data</span><span class="p">.</span><span class="n">update_skeleton_reference_pose</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="n">_skeletal_mesh_import_data</span>
+
+
+<span class="k">def</span> <span class="nf">fbx_import_option</span><span class="p">(</span><span class="n">static_mesh_import_data</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">skeletal_mesh_import_data</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="s">""" fbx import option """</span>
+    <span class="n">_options</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">FbxImportUI</span><span class="p">()</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">import_mesh</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">import_textures</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">import_materials</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">import_as_skeletal</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">static_mesh_import_data</span> <span class="o">=</span> <span class="n">static_mesh_import_data</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">skeletal_mesh_import_data</span> <span class="o">=</span> <span class="n">skeletal_mesh_import_data</span>
+    <span class="k">return</span> <span class="n">_options</span>
+
+
+<span class="k">def</span> <span class="nf">create_import_task</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">destinataion_path</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="s">""" the import task for fbx, texture, audio and os on """</span>
+    <span class="n">_task</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">AssetImportTask</span><span class="p">()</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">automated</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">destination_path</span> <span class="o">=</span> <span class="n">destinataion_path</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">file_name</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">replace_existing</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">save</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+    <span class="k">return</span> <span class="n">_task</span>
+
+
+<span class="c1"># target asset
+</span><span class="n">static_mesh_fbx</span>   <span class="o">=</span> <span class="s">'C:/sm_box.fbx'</span>
+<span class="n">skeletal_mesh_fbx</span> <span class="o">=</span> <span class="s">'C:/sk_character.fbx'</span>
+<span class="mi">2</span><span class="n">d_texture</span>        <span class="o">=</span> <span class="s">'C:/t_checker.tga'</span>
+
+<span class="c1"># set the input option for fbx ( texture does not have option )
+</span><span class="n">import_static_mesh_option</span> <span class="o">=</span> <span class="n">fbx_import_option</span><span class="p">(</span><span class="n">static_mesh_import_data</span><span class="o">=</span><span class="n">fbx_static_mesh_import_data</span><span class="p">())</span>
+<span class="n">import_skeletal_mesh_option</span> <span class="o">=</span> <span class="n">fbx_import_option</span><span class="p">(</span><span class="n">skeletal_mesh_import_data</span><span class="o">=</span><span class="n">fbx_skeletal_mesh_import_data</span><span class="p">())</span>
+
+<span class="c1"># generate task
+</span><span class="n">import_static_mesh_task</span> <span class="o">=</span> <span class="n">create_import_task</span><span class="p">(</span><span class="n">static_mesh_fbx</span><span class="p">,</span> <span class="s">'/Game/StaticMesh/'</span><span class="p">,</span> <span class="n">import_static_mesh_option</span><span class="p">)</span>
+<span class="n">import_skeletal_mesh_task</span> <span class="o">=</span> <span class="n">create_import_task</span><span class="p">(</span><span class="n">static_mesh_fbx</span><span class="p">,</span> <span class="s">'/Game/SkeletalMesh/'</span><span class="p">,</span> <span class="n">import_skeletal_mesh_option</span><span class="p">)</span>
+<span class="n">import_texture_task</span> <span class="o">=</span> <span class="n">create_import_task</span><span class="p">(</span><span class="mi">2</span><span class="n">d_texture</span><span class="p">,</span> <span class="s">'/Game/Texture/'</span><span class="p">)</span>
+
+<span class="n">total_task</span> <span class="o">=</span> <span class="p">[</span><span class="n">import_static_mesh_task</span><span class="p">,</span> <span class="n">import_skeletal_mesh_task</span><span class="p">,</span> <span class="n">import_texture_task</span><span class="p">]</span>
+
+<span class="c1"># run the task
+</span><span class="n">unreal</span><span class="p">.</span><span class="n">AssetToolsHelpers</span><span class="p">.</span><span class="n">get_asset_tools</span><span class="p">().</span><span class="n">import_asset_tasks</span><span class="p">(</span><span class="n">total_task</span><span class="p">)</span>
+
+</pre></table></code></div></div><h2 id="export">Export</h2><p>导出的基本方法：</p><blockquote><p>创建输出任务，然后运行任务。</p></blockquote><p>而输出不同类型的资源，需要创建不同的Exporter和设置不同的Export Option（有些类型没有输出选项）。将Exporter和Export Option传入Task，就可以创建对应的输出任务。</p><h3 id="export-static-mesh-as-fbx">Export Static Mesh As Fbx</h3><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">fbx_export_option</span><span class="p">():</span>
+    <span class="s">'''Create the fbx export option'''</span>
+    <span class="n">_options</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">FbxExportOption</span><span class="p">()</span>
+    <span class="n">_options</span><span class="p">.</span><span class="nb">ascii</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">collision</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">export_local_time</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">export_morph_targets</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">export_preview_mesh</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">fbx_export_compatibility</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">FbxExportCompatibility</span><span class="p">.</span><span class="n">FBX_2013</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">force_front_x_axis</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">level_of_detail</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">map_skeletal_motion_to_root</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_options</span><span class="p">.</span><span class="n">vertex_color</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="n">_options</span>
+
+<span class="k">def</span> <span class="nf">create_export_task</span><span class="p">(</span><span class="n">exporter</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+    <span class="s">'''generated the task by exporter'''</span>
+    <span class="n">_task</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">AssetExportTask</span><span class="p">()</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">exporter</span> <span class="o">=</span> <span class="n">exporter</span>
+    <span class="n">_task</span><span class="p">.</span><span class="nb">object</span> <span class="o">=</span> <span class="n">obj</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">automated</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">replace_identical</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">write_empty_files</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">_task</span><span class="p">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">file_name</span>
+    <span class="k">return</span> <span class="n">_task</span>
+
+<span class="c1"># asset to export
+</span><span class="n">asset</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">EditorUtilityLibrary</span><span class="p">.</span><span class="n">get_selected_asset_data</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># the path to export
+</span><span class="n">filename</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">Paths</span><span class="p">.</span><span class="n">project_saved_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s">'export/'</span> <span class="o">+</span> <span class="n">asset</span><span class="p">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s">'.fbx'</span>
+<span class="c1"># the exporter type
+</span><span class="n">exporter</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">StaticMeshExporterFBX</span><span class="p">()</span>
+<span class="c1"># create the Task with the options
+</span><span class="n">task</span> <span class="o">=</span> <span class="n">create_export_task</span><span class="p">(</span><span class="n">exporter</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="n">fbx_export_option</span><span class="p">(),</span> <span class="n">filename</span><span class="p">)</span>
+<span class="c1"># Run Task !
+</span><span class="k">if</span> <span class="n">unreal</span><span class="p">.</span><span class="n">Exporter</span><span class="p">.</span><span class="n">run_asset_export_task</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
+    <span class="n">unreal</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">"export_tasks : success"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">unreal</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">"export_tasks : failure"</span><span class="p">)</span>
+</pre></table></code></div></div><h3 id="export-texture-as-tga">Export Texture As TGA</h3><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="p">...</span>
+<span class="c1"># the texture exporter !
+</span><span class="n">exporter</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">TextureExporterTGA</span><span class="p">()</span>
+<span class="c1"># the path to export
+</span><span class="n">filename</span> <span class="o">=</span> <span class="n">unreal</span><span class="p">.</span><span class="n">Paths</span><span class="p">.</span><span class="n">project_saved_dir</span><span class="p">()</span> <span class="o">+</span> <span class="s">'export/'</span> <span class="o">+</span> <span class="n">asset</span><span class="p">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s">'.tga'</span>
+<span class="c1"># texture exporter do not need options
+</span><span class="n">task</span> <span class="o">=</span> <span class="n">create_export_task</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="c1"># Run Task
+</span><span class="n">unreal</span><span class="p">.</span><span class="n">Exporter</span><span class="p">.</span><span class="n">run_asset_export_task</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</pre></table></code></div></div><h3 id="export-scene">Export Scene</h3><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="c1"># EditorLoadingAndSavingUtils Class
+</span><span class="n">unreal</span><span class="p">.</span><span class="n">EditorLoadingAndSavingUtils</span><span class="p">.</span><span class="n">export_scene</span><span class="p">(</span><span class="n">export_selected_actors_only</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/unreal/'>Unreal</a>, <a href='/categories/script/'>Script</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/unreal/" class="post-tag no-text-decoration" >Unreal</a> <a href="/tags/python/" class="post-tag no-text-decoration" >Python</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Unreal Python 入门 - Walk In Cloud&url=https://liuzkai.github.io/posts/how_to_use_unreal_python/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Unreal Python 入门 - Walk In Cloud&u=https://liuzkai.github.io/posts/how_to_use_unreal_python/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Unreal Python 入门 - Walk In Cloud&url=https://liuzkai.github.io/posts/how_to_use_unreal_python/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/HoutoUsingOpenCLInHoudini/">如何在Houdini中使用OpenCL</a><li><a href="/posts/how_to_use_unreal_python/">Unreal Python 入门</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/computeshader/">ComputeShader</a> <a class="post-tag" href="/tags/houdini/">Houdini</a> <a class="post-tag" href="/tags/opencl/">OpenCL</a> <a class="post-tag" href="/tags/python/">Python</a> <a class="post-tag" href="/tags/unreal/">Unreal</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/HoutoUsingOpenCLInHoudini/"><div class="card-body"> <span class="timeago small" > May 22, 2021 <i class="unloaded">2021-05-22T21:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>如何在Houdini中使用OpenCL</h3><div class="text-muted small"><p> 前言 本文中前六个案例参考OpenCL H16.5 Masterclass SideFX此视频，网页已经提供了文件，可以前去下载。后面的案例和关于workset的认识可能存在纰漏，如读者发现还请批评指正。 关于OpenCL的相关参考可查阅此文章和此网站。 案例一 Attribute 对模型进行平均平滑 因为opencl中没法用到vex中的方法，只能处理传进去的数组，因此将需要的...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <span class="btn btn-outline-primary disabled"><p>-</p></span> <a href="/posts/HoutoUsingOpenCLInHoudini/" class="btn btn-outline-primary"><p>如何在Houdini中使用OpenCL</p></a></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('.post-content img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://twitter.com/WalkinCloud2">ZhongkaiLiu</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/computeshader/">ComputeShader</a> <a class="post-tag" href="/tags/houdini/">Houdini</a> <a class="post-tag" href="/tags/opencl/">OpenCL</a> <a class="post-tag" href="/tags/python/">Python</a> <a class="post-tag" href="/tags/unreal/">Unreal</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://liuzkai.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
