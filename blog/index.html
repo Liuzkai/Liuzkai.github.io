@@ -1,0 +1,7 @@
+---
+layout: terminal
+title: 博客
+permalink: /blog/
+redirect_from: /posts/
+---
+<div class="blog-heading"><p class="eyebrow">FIELD NOTES / {{ site.posts | size }} ENTRIES</p><h1>研究，实践，记录<span class="section-cursor">_</span></h1><p>Unreal Engine、Houdini 与创作工具的开发笔记。</p></div><div class="blog-tools"><label for="blog-search">❯ 搜索文章</label><input id="blog-search" type="search" placeholder="标题、正文、分类或标签…" data-index="{{ '/search.json' | relative_url }}" autocomplete="off"><p id="search-status" role="status" aria-live="polite">输入关键词进行全文搜索</p><noscript>搜索需要 JavaScript；以下完整文章列表、分类和标签仍可使用。</noscript></div><div id="search-results" hidden></div><div id="all-posts">{% assign posts = site.posts %}{% include terminal-posts.html %}</div>

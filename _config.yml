@@ -7,7 +7,7 @@
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # --------------------------
-title: Walk In Cloud                          # the main title
+title: Zhongkai Liu                          # the main title
 
 tagline: I'm a tech artist in China. I work with unreal and houdini.  # it will display as the sub-title
 
@@ -50,7 +50,7 @@ baseurl: ''
 timezone: Asia/Shanghai
 
 google_analytics:
-  id: 'G-JWC7CE0EWK'          # Fill with your Google Analytics ID
+  id: ''          # Fill with your Google Analytics ID
   pv:
     # The Google Analytics pageviews switch.
     # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
@@ -92,7 +92,7 @@ avatar: https://raw.githubusercontent.com/Liuzkai/Liuzkai.github.io/master/img/I
 # boolean type, the global switch for ToC in posts.
 toc: true
 
-paginate: 10
+lang: zh-CN
 
 kramdown:
   syntax_highlighter: rouge

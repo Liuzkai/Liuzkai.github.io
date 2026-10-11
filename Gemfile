@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "jekyll", ">= 4.1.0", "< 5.0"
+gem "jekyll", "~> 4.2.0"
 
 # plugins
 group :jekyll_plugins do
@@ -11,9 +11,8 @@ group :jekyll_plugins do
   gem "jekyll-sitemap"
 end
 
-group :test do
-  gem "html-proofer"
-end
+gem "csv"
+gem "base64"
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.

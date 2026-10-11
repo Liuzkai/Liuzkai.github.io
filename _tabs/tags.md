@@ -1,4 +1,5 @@
 ---
+redirect_from: /tags/
 layout: tags
 title: Tags
 icon: fas fa-tags

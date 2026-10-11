@@ -1,77 +1,21 @@
-#!/bin/bash
-#
-# Deploy the content of _site to 'origin/<pages_branch>'
-#
-# v2.5
-# https://github.com/cotes2020/jekyll-theme-chirpy
-# © 2020 Cotes Chung
-# Published under MIT License
-
-set -eu
-
-PAGES_BRANCH="gh-pages"
-
-_no_branch=false
-_backup_dir="$(mktemp -d)"
-
-init() {
-  if [[ -z ${GITHUB_ACTION+x} ]]; then
-    echo "ERROR: This script is not allowed to run outside of GitHub Action."
-    exit -1
-  fi
-
-  # Gemfile could be changed by `bundle install` in actions workflow
-  if [[ -n $(git status Gemfile.lock --porcelain) ]]; then
-    git checkout -- Gemfile.lock
-  fi
-
-  if [[ -z $(git branch -av | grep "$PAGES_BRANCH") ]]; then
-    _no_branch=true
-    git checkout -b "$PAGES_BRANCH"
-  else
-    git checkout "$PAGES_BRANCH"
-  fi
-}
-
-backup() {
-  mv _site/* "$_backup_dir"
-  mv .git "$_backup_dir"
-
-  # When adding custom domain from Github website,
-  # the CANME only exist on `gh-pages` branch
-  if [[ -f CNAME ]]; then
-    mv CNAME "$_backup_dir"
-  fi
-}
-
-flush() {
-  rm -rf ./*
-  rm -rf .[^.] .??*
-
-  shopt -s dotglob nullglob
-  mv "$_backup_dir"/* .
-}
-
-deploy() {
-  git config --global user.name "GitHub Actions"
-  git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-  git update-ref -d HEAD
-  git add -A
-  git commit -m "[Automation] Site update No.${GITHUB_RUN_NUMBER}"
-
-  if $_no_branch; then
-    git push -u origin "$PAGES_BRANCH"
-  else
-    git push -f
-  fi
-}
-
-main() {
-  init
-  backup
-  flush
-  deploy
-}
-
-main
+#!/usr/bin/env bash
+# Publish with a normal commit; never rewrite gh-pages history.
+set -euo pipefail
+[[ "${GITHUB_ACTIONS:-}" == "true" ]] || { echo 'Run this script in GitHub Actions.' >&2; exit 1; }
+[[ -f _site/index.html ]] || { echo 'Build _site first.' >&2; exit 1; }
+root=$(pwd)
+publish=$(mktemp -d)
+trap 'git worktree remove --force "$publish" >/dev/null 2>&1 || true' EXIT
+git fetch origin gh-pages
+git worktree add --detach "$publish" origin/gh-pages
+# Preserve a Pages-managed custom domain if one exists.
+if [[ -f "$publish/CNAME" && ! -f _site/CNAME ]]; then cp "$publish/CNAME" _site/CNAME; fi
+rsync -a --delete --exclude=.git "$root/_site/" "$publish/"
+touch "$publish/.nojekyll"
+git -C "$publish" config user.name 'GitHub Actions'
+git -C "$publish" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+git -C "$publish" add -A
+if ! git -C "$publish" diff --cached --quiet; then
+  git -C "$publish" commit -m "Publish ${GITHUB_SHA:-site}"
+  git -C "$publish" push origin HEAD:gh-pages
+fi
