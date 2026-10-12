@@ -75,3 +75,7 @@ GitHub Pages 使用 **`gh-pages` 分支的根目录 `/`**。无需手工编辑 `
 ## 许可证与来源
 
 历史主题基于 [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)，保留原作者 Cotes Chung 的 [MIT LICENSE](LICENSE) 与相关归属。字体许可随资源提供：[IBM Plex](assets/terminal/assets/fonts/plex-OFL.txt)、[Silkscreen](assets/terminal/assets/fonts/silkscreen-OFL.txt)。
+
+Liuzkai 的原创站点代码及其原创配套技术文档采用 [MIT 许可](LICENSE-MIT)，允许使用、复制、修改和商业分发；分发副本或实质性部分时，须保留版权声明及完整许可声明，无需在产品界面署名。主题及其他第三方代码按原许可使用；修改主题产生的作品仍须保留原有版权与许可声明。
+
+博客文章继续按 [`_data/rights.yml`](_data/rights.yml) 声明采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，另有注明的内容除外；不改成代码 MIT 许可。文章中的第三方摘录、图片及项目截图等仍归相应权利人，字体继续遵循随附 OFL；未确认来源的素材不因本次整理而获得新的 MIT 授权。
