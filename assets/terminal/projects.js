@@ -1,5 +1,28 @@
 const PROJECTS = [
   {
+    "name": "civmap",
+    "description": "Real-world 4X strategy map atlas (China & US) drawn from authoritative public data.",
+    "fork": false,
+    "homepage": "https://liuzkai.github.io/civmap/",
+    "pushed": "2026-11-26T15:30:00Z",
+    "stars": 0,
+    "language": "JavaScript",
+    "pages": true,
+    "url": "https://github.com/Liuzkai/civmap",
+    "tier": "精选",
+    "category": "数据地图",
+    "descriptionZh": "用 4X 策略游戏地图呈现真实的当代中国与美国：六边形山河地形、城市产出横幅、能源矿产资源、奇观与区县专题图层，纯前端零依赖运行。",
+    "tags": [
+      "Canvas",
+      "Python",
+      "4X 地图",
+      "中英双版"
+    ],
+    "status": "在线作品",
+    "source": "https://github.com/Liuzkai/civmap",
+    "liveUrl": "https://liuzkai.github.io/civmap/cn.html"
+  },
+  {
     "name": "HoudiniShare",
     "description": null,
     "fork": false,
@@ -512,6 +535,37 @@ const PROJECTS = [
   }
 ];
 const SELECTED = [
+  {
+    "name": "civmap",
+    "description": "Real-world 4X strategy map atlas (China & US) drawn from authoritative public data.",
+    "fork": false,
+    "homepage": "https://liuzkai.github.io/civmap/",
+    "pushed": "2026-11-26T15:30:00Z",
+    "stars": 0,
+    "language": "JavaScript",
+    "pages": true,
+    "url": "https://github.com/Liuzkai/civmap",
+    "tier": "精选",
+    "category": "数据地图",
+    "descriptionZh": "用 4X 策略游戏地图呈现真实的当代中国与美国：六边形山河地形、城市产出横幅、能源矿产资源、奇观与区县专题图层，纯前端零依赖运行。",
+    "tags": [
+      "Canvas",
+      "Python",
+      "4X 地图",
+      "中英双版"
+    ],
+    "status": "在线作品",
+    "source": "https://github.com/Liuzkai/civmap",
+    "liveUrl": "https://liuzkai.github.io/civmap/cn.html",
+    "title": "CivMap · 文明地图",
+    "group": "tool",
+    "image": "/assets/terminal/assets/civmap-preview.jpg",
+    "imageLabel": "在线地图 · 实际截图",
+    "imageAlt": "CivMap 4X 策略风格六边形真实数据地图预览",
+    "position": "center",
+    "imageSource": "https://liuzkai.github.io/civmap/cn.html",
+    "cardDescription": "用 4X 策略游戏风格绘制真实的当代中国与美国地图：六边形山河、城市产出、能源矿产与多维专题图层，支持中/美双图一键切换。"
+  },
   {
     "name": "pattern-recall",
     "description": "Recall 3×3 Android unlock patterns with remembered clues, candidate filtering, and an interactive drawing pad. All calculations stay in your browser.",
